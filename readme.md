@@ -15,7 +15,7 @@ PC $> wget -q www.google.com && echo "Internet access over HTTP/HTTPS is OK !" |
 
 * *Should provide you the following terminal output if your internet connection is ok*
 
-![](\Pictures\1_Screenshot.png)
+![Picture](\Pictures\1_Screenshot.png)
 
 
 
