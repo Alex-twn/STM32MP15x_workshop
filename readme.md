@@ -98,7 +98,7 @@
 
 ​	*Should provide you the following terminal output*
 
-![](/Pictures/3_screenshot.png)
+![](/Pictures/3_Screenshot.png)
 
 
 
