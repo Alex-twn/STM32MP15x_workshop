@@ -13,9 +13,9 @@ PC $> cd $HOME/STM32MPU_workspace
 PC $> wget -q www.google.com && echo "Internet access over HTTP/HTTPS is OK !" || echo "No internet access over HTTP/HTTPS ! You may need to set up a proxy.“
 ```
 
-​	*Should provide you the following terminal output if your internet connection is ok*
+* *Should provide you the following terminal output if your internet connection is ok*
 
-![](C:\Users\alexandre mengeaud\Documents\STM32MP15x_Security_Workshop\Pictures\1_Screenshot from 2020-10-22 14-30-30.png)
+![](C:\Users\alexandre mengeaud\Documents\STM32MP15x_Security_Workshop\Pictures\1_Screenshot.png)
 
 
 
@@ -30,7 +30,7 @@ PC $> sudo apt-get install openjdk-8-jre-headless
 PC $> sudo update-alternatives --config java
 ```
 
-​	*Select the java-8-openjdk configuration*
+* *Select the java-8-openjdk configuration*
 
 2. Install OpenJFX for Ubuntu® 18.04
 
@@ -57,7 +57,7 @@ PC $> mkdir $HOME/STM32MPU_workspace/tmp
 
 [id0]: https://www.st.com/en/development-tools/stm32cubeprog.html#getsoftware-scroll
 
-​	Note : if you have copied the STM32CubeProgrammer installation file from the USB dongle, please copy this installation file in **$HOME/STM32MPU_workspace/tmp***
+* Note : if you have copied the STM32CubeProgrammer installation file from the USB dongle, please copy this installation file in **$HOME/STM32MPU_workspace/tmp***
 
 6. Decompress the archive file to get the STM32CubeProgrammer installers
 
@@ -72,7 +72,7 @@ PC $> unzip SetupSTM32CubeProgrammer.zip
 PC $> ./SetupSTM32CubeProgrammer-2.5.0.linux
 ```
 
-​	*Select **$HOME/STM32MPU_workspace/STM32MPU_tools/STM32CubeProgrammer-2.5.0** as the installation directory, when it's requested by the installer*
+* *Select **$HOME/STM32MPU_workspace/STM32MPU_tools/STM32CubeProgrammer-2.5.0** as the installation directory, when it's requested by the installer*
 
 8. Add the STM32CubeProgrammer binary path to your PATH environment variable (or .bashrc)
 
