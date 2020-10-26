@@ -179,9 +179,9 @@ PC $> tar xvf en.FLASH-stm32mp1-openstlinux-5-4-dunfell-mp1-20-06-24.tar.x
 
 7. Select "Open File" tab and select the "FlashLayout_sdcard_stm32mp157a-dk1-trusted.tsv" file in the Starter Package installation folder (**$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.5.0/Starter-Package/stm32mp1-openstlinux-5.4-dunfell-mp1-20-06-24/images/stm32mp1/flashlayout_st-image-weston/trusted**)
 
-![](/Pictures/7_screenshot.jpg)
+![](/Pictures/7_Screenshot.jpg)
 
-![](/Pictures/8_screenshot.jpg)
+![](/Pictures/8_Screenshot.jpg)
 
 8. Fill the "Binaries Path" by browsing up to folder $[Starter_Pack_Path]/images/stm32mp1
 
