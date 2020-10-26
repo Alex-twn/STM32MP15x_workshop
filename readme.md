@@ -98,7 +98,7 @@
 
 ​	*Should provide you the following terminal output*
 
-![](Pictures/3_screenshot.png)
+![](/Pictures/3_screenshot.png)
 
 
 
@@ -173,9 +173,9 @@ PC $> tar xvf en.FLASH-stm32mp1-openstlinux-5-4-dunfell-mp1-20-06-24.tar.x
 
 6. On the right, select USB (not STLINK, set by default) in the connection picklist and click on "Refresh" button. Serial Number is displayed if USB is detected. Click on "Connect"
 
-![](/Pictures/5_screenshot.png)
+![](/Pictures/5_Screenshot.png)
 
-![](/Pictures/6_screenshot.png)
+![](/Pictures/6_Screenshot.png)
 
 7. Select "Open File" tab and select the "FlashLayout_sdcard_stm32mp157a-dk1-trusted.tsv" file in the Starter Package installation folder (**$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.5.0/Starter-Package/stm32mp1-openstlinux-5.4-dunfell-mp1-20-06-24/images/stm32mp1/flashlayout_st-image-weston/trusted**)
 
