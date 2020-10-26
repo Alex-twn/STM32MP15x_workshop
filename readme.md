@@ -80,7 +80,7 @@
 > ```
 >
 
-* *Select **$HOME/STM32MPU_workspace/STM32MPU_tools/STM32CubeProgrammer-2.5.0** as the installation directory, when it's requested by the installer*
+- Select **$HOME/STM32MPU_workspace/STM32MPU_tools/STM32CubeProgrammer-2.5.0** as the installation directory, when it's requested by the installer*
 
 8. Add the STM32CubeProgrammer binary path to your PATH environment variable (or .bashrc)
 
@@ -96,7 +96,7 @@
 > ```
 >
 
-​	*Should provide you the following terminal output*
+* *Should provide you the following terminal output*
 
 ![](/Pictures/3_Screenshot.png)
 
@@ -148,6 +148,8 @@
 PC $> tar xvf en.FLASH-stm32mp1-openstlinux-5-4-dunfell-mp1-20-06-24.tar.x
 ```
 
+
+
 ------
 
 # Program the SDCard for STM32MP157A-DK1 board
@@ -177,13 +179,13 @@ PC $> tar xvf en.FLASH-stm32mp1-openstlinux-5-4-dunfell-mp1-20-06-24.tar.x
 
 ![](/Pictures/6_Screenshot.png)
 
-7. Select "Open File" tab and select the "FlashLayout_sdcard_stm32mp157a-dk1-trusted.tsv" file in the Starter Package installation folder (**$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.5.0/Starter-Package/stm32mp1-openstlinux-5.4-dunfell-mp1-20-06-24/images/stm32mp1/flashlayout_st-image-weston/trusted**)
+7. Select "Open File" tab and select the "FlashLayout_sdcard_stm32mp157a-dk1-trusted.tsv" file in **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.5.0/Starter-Package/stm32mp1-openstlinux-5.4-dunfell-mp1-20-06-24/images/stm32mp1/flashlayout_st-image-weston/trusted** installation folder
 
 ![](/Pictures/7_Screenshot.jpg)
 
 ![](/Pictures/8_Screenshot.jpg)
 
-8. Fill the "Binaries Path" by browsing up to folder $[Starter_Pack_Path]/images/stm32mp1
+8. Fill the "Binaries Path" by browsing up to folder **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.5.0/Starter-Package/stm32mp1-openstlinux-5.4-dunfell-mp1-20-06-24/images/stm32mp1**
 
 ![](/Pictures/9_Screenshot.png)
 
