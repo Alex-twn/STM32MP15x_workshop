@@ -55,9 +55,7 @@ PC $> mkdir $HOME/STM32MPU_workspace/tmp
 
 5. Download the latest 
 
-   [STM32CubeProgrammer]: https://www.st.com/en/development-tools/stm32cubeprog.html#getsoftware-scroll
-
-    in **$HOME/STM32MPU_workspace/tmp**
+   [Download the latest STM32CubeProgrammer in **$HOME/STM32MPU_workspace/tmp**]: https://www.st.com/en/development-tools/stm32cubeprog.html#getsoftware-scroll
 
    *Note : if you have copied the installation file from the USB dongle, please copy this installation file in **$HOME/STM32MPU_workspace/tmp***
 
