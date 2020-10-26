@@ -203,6 +203,20 @@ PC $> tar xvf en.FLASH-stm32mp1-openstlinux-5-4-dunfell-mp1-20-06-24.tar.x
 
 ------
 
+# Boot the board
+
+1. Set the boot switches (located at the back of the board) to the ON position
+
+![img](https://wiki.st.com/stm32mpu/nsfr_img_auth.php/1/1d/STM32MP157C-DK2_jumper_boot.jpg)
+
+2. Power up the board
+
+3. Press the "Reset "button to reset the board
+
+
+
+------
+
 # Program the SDCard for STM32MP157A-DK1 board
 
 The serial terminal allows to communicate with the board trough a UART serial interface.
