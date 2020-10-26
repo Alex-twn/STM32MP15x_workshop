@@ -15,7 +15,7 @@ PC $> wget -q www.google.com && echo "Internet access over HTTP/HTTPS is OK !" |
 
 ​	*Should provide you the following terminal output if your internet connection is ok*
 
-![image-20201026120204280](C:\Users\alexandre mengeaud\AppData\Roaming\Typora\typora-user-images\image-20201026120204280.png)
+![](C:\Users\alexandre mengeaud\Documents\STM32MP15x_Security_Workshop\Pictures\1_Screenshot from 2020-10-22 14-30-30.png)
 
 
 
@@ -53,9 +53,7 @@ PC $> mkdir $HOME/STM32MPU_workspace/STM32MPU_tools/STM32CubeProgrammer-2.5.0
 PC $> mkdir $HOME/STM32MPU_workspace/tmp
 ```
 
-5. Download the latest 
-
-   [Download the latest STM32CubeProgrammer in **$HOME/STM32MPU_workspace/tmp**]: https://www.st.com/en/development-tools/stm32cubeprog.html#getsoftware-scroll
+5. [Download the latest STM32CubeProgrammer in $HOME/STM32MPU_workspace/tmp]: https://www.st.com/en/development-tools/stm32cubeprog.html#getsoftware-scroll	"STM32CubeProgrammer"
 
    *Note : if you have copied the installation file from the USB dongle, please copy this installation file in **$HOME/STM32MPU_workspace/tmp***
 
