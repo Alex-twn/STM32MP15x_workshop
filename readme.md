@@ -125,7 +125,7 @@
 
 ------
 
-# Install the starter package on your host computer
+# Install STM32MP1 OpenSTLinux Starter Package on your host computer
 
 1. Create your STM32MP15x Starter Package directory
 
@@ -136,7 +136,7 @@
 > ```
 >
 
-2. Download the [STM32MP15-Ecosystem-v2.0.0][id1] Starter Package in **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Starter-Package**
+2. Download the latest [STM32MP1 OpenSTLinux Starter Package][id1] Starter Package in **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Starter-Package**
 
    [id1]: https://www.st.com/content/ccc/resource/technical/software/firmware/group0/6a/12/67/7d/22/19/43/d4/STM32MP15_OpenSTLinux_Starter_Package/files/FLASH-stm32mp1-openstlinux-5-4-dunfell-mp1-20-06-24.tar.xz/_jcr_content/translations/en.FLASH-stm32mp1-openstlinux-5-4-dunfell-mp1-20-06-24.tar.xz
 
@@ -896,16 +896,16 @@ The SDK for OpenSTLinux distribution provides a stand-alone cross-development to
 
 ------
 
-# Starting up the SDK
+# Start up the SDK on your host computer
 
 The SDK environment setup script must be run once in each new working terminal in which you cross-compile
 
 > ```bash
-> PC $> cd $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package 
-> PC $> source SDK/environment-setup-cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
+> PC $> cd $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/SDK
+> PC $> source environment-setup-cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
 > ```
 
-The following checks allow to ensure that the environment is correctly setup:
+The following checks allow to ensure that the environment is correctly setup
 
 1. Check the target architecture
 
@@ -939,3 +939,122 @@ The following checks allow to ensure that the environment is correctly setup:
 > ```
 
 * *If any of these commands fails or does not return the expected result, please try to reinstall the SDK*
+
+The SDK is in the *<SDK installation directory>*
+
+> ```
+> <SDK installation directory>                                      SDK for OpenSTLinux distribution: details in Standard SDK directory structure article
+> ├── environment-setup-cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi  Environment setup script for Developer Package
+> ├── site-config-cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
+> ├── sysroots
+> │   ├── cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi                Target sysroot (libraries, headers, and symbols)
+> │   │   └── [...]
+> │   └── x86_64-ostl_sdk-linux                                     Native sysroot (libraries, headers, and symbols)
+> │       └── [...]
+> └── version-cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
+> ```
+
+
+
+------
+
+# Install STM32MP1 OpenSTLinux Developer Package on your host computer
+
+1. Download the latest [STM32MP1 OpenSTLinux Developer Package][id3] in **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package**
+
+[id3]: https://www.st.com/content/st_com/en/products/embedded-software/mcu-mpu-embedded-software/stm32-embedded-software/stm32-mpu-openstlinux-distribution/stm32mp1dev.html
+
+* *This package includes the following pieces of software in source code*
+  * *Linux® kernel*
+  * *U-Boot*
+  * *Trusted firmware-A (TF-A)*
+  * *An optional open source trusted execution environment (OP-TEE)*
+
+2. Go to **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package** directory
+
+> ```bash
+> PC $> cd $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package
+> ```
+
+3. Decompress the tarball file to get the Linux kernel (Linux kernel source code, ST patches, ST configuration fragments...)
+
+> ```bash
+> PC $> tar xvf en.SOURCES-kernel-stm32mp1-openstlinux-5-4-dunfell-mp1-20-06-24.tar.xz
+> PC $> cd stm32mp1-openstlinux-5.4-dunfell-mp1-20-06-24/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.31-r0
+> PC $> tar xvf linux-5.4.31.tar.xz
+> PC $> cd linux-5.4.31 
+> ```
+
+- *The **Linux kernel installation directory** is in the **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-20-06-24/sources/arm-ostl-linux-gnueabi** directory, and is named **linux-stm32mp-5.4.31-r0***
+
+> ```
+> linux-stm32mp-5.4.31-r0     Linux kernel installation directory
+> ├── [*].patch             ST patches to apply during the Linux kernel preparation (see next chapter)
+> ├── fragment-[*].config   ST configuration fragments to apply during the Linux kernel configuration (see next chapter)
+> ├── linux-5.4.31          Linux kernel source code directory
+> ├── linux-5.4.31.tar.xz   Tarball file of the Linux kernel source code
+> ├── README.HOW_TO.txt     Helper file for Linux kernel management: reference for Linux kernel build
+> └── series                List of all ST patches to apply
+> ```
+
+
+
+------
+
+# Building and deploying the Linux kernel for the first time
+
+1. If not done yet, the SDK environment setup script must be run once to allow further cross-compilation
+
+> ```bash
+> PC $> source $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/SDK/environment-setup-cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
+> ```
+
+2. Go to **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-20-06-24/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.31-r0/linux-5.4.31** directory
+
+> ```bash
+> PC $> cd $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-20-06-24/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.31-r0/linux-5.4.31
+> ```
+
+3. Apply the ST patches
+
+> ```bash
+> PC $> for p in `ls -1 ../*.patch`; do patch -p1 < $p; done
+> ```
+
+4. Create a directory where the kernel will be built
+
+> ```bash
+> PC $> mkdir -p ../build
+> ```
+
+5. Make and apply fragments
+
+> ```bash
+> PC $> make ARCH=arm O="$PWD/../build" multi_v7_defconfig fragment*.config
+> PC $> for f in `ls -1 ../fragment*.config`; do scripts/kconfig/merge_config.sh -m -r -O $PWD/../build $PWD/../build/.config $f; done
+> PC $> yes '' | make ARCH=arm oldconfig O="$PWD/../build"
+> ```
+
+6. Compile kernel source code
+
+* Build kernel images (uImage and vmlinux) and device tree (dtbs)
+
+> ```bash
+> PC $> make ARCH=arm uImage vmlinux dtbs LOADADDR=0xC2000040 O="$PWD/../build"
+> ```
+
+* Build kernel modules
+
+> ```bash
+> PC $> make ARCH=arm modules O="$PWD/../build"
+> ```
+
+* Generate output build artifacts
+
+> ```bash
+> PC $> make ARCH=arm INSTALL_MOD_PATH="$PWD/../build/install_artifact" modules_install O="$PWD/../build"
+> PC $> mkdir -p $PWD/../build/install_artifact/boot/
+> PC $> cp $PWD/../build/arch/arm/boot/uImage $PWD/../build/install_artifact/boot/
+> PC $> cp $PWD/../build/arch/arm/boot/dts/st*.dtb $PWD/../build/install_artifact/boot/
+> ```
+
