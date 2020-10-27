@@ -850,10 +850,92 @@ The SDK for OpenSTLinux distribution provides a stand-alone cross-development to
 > PC $> sudo mv /tmp/mmc_block.conf /etc/modprobe.d/mmc_block.conf
 > ```
 
-3. Download the [Developer Package SDK](https://www.st.com/content/ccc/resource/technical/software/sw_development_suite/group0/6f/5f/e6/0a/4c/c3/45/a9/stm32mp1dev_yocto_sdk/files/SDK-x86_64-stm32mp1-openstlinux-5.4-dunfell-mp1-20-06-24.tar.xz/_jcr_content/translations/en.SDK-x86_64-stm32mp1-openstlinux-5.4-dunfell-mp1-20-06-24.tar.xz) in **$HOME/STM32MPU_workspace/tmp**
-4. Uncompress the tarball file to get the SDK installation script
+3. Download the latest [Developer Package SDK][id2] in **$HOME/STM32MPU_workspace/tmp**
+
+[id2]: https://www.st.com/content/ccc/resource/technical/software/sw_development_suite/group0/6f/5f/e6/0a/4c/c3/45/a9/stm32mp1dev_yocto_sdk/files/SDK-x86_64-stm32mp1-openstlinux-5.4-dunfell-mp1-20-06-24.tar.xz/_jcr_content/translations/en.SDK-x86_64-stm32mp1-openstlinux-5.4-dunfell-mp1-20-06-24.tar.xz
+
+4. Decompress the tarball file to get the SDK installation script
 
 > ```bash
 > PC $> cd $HOME/STM32MPU_workspace/tmp
 > PC $> tar xvf en.SDK-x86_64-stm32mp1-openstlinux-5.4-dunfell-mp1-20-06-24.tar.xz
 > ```
+
+5. Create your STM32MP15x Developer Package SDK directory
+
+> ```bash
+> PC $> mkdir -p $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/SDK
+> ```
+
+6. Change the permissions of the SDK installation script so that it is executable
+
+> ```bash
+> PC $> chmod +x stm32mp1-openstlinux-5.4-dunfell-mp1-20-06-24/sdk/st-image-weston-openstlinux-weston-stm32mp1-x86_64-toolchain-3.1-openstlinux-5.4-dunfell-mp1-20-06-24.sh
+> ```
+
+7. Execute the SDK installation script
+
+> ```bash
+> PC $> ./stm32mp1-openstlinux-5.4-dunfell-mp1-20-06-24/sdk/st-image-weston-openstlinux-weston-stm32mp1-x86_64-toolchain-3.1-openstlinux-5.4-dunfell-mp1-20-06-24.sh -d <working directory absolute path>/Developer-Package/SDK
+> ```
+
+* *A successful installation outputs the following log*
+
+> ```bash
+> ST OpenSTLinux - Weston - (A Yocto Project Based Distro) SDK installer version 3.1-openstlinux-5.4-dunfell-mp1-20-06-24
+> =======================================================================================================================
+> You are about to install the SDK to "/home/osboxes/MCD/V2.0/Developper-Package/SDK". Proceed [Y/n]? Y
+> Extracting SDK................................................................................................................................................................................................................done
+> Setting it up...done
+> SDK has been successfully set up and is ready to be used.
+> Each time you wish to use the SDK in a new shell session, you need to source the environment setup script e.g.
+>  $ . /<working directory absolute path>/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/SDK/en
+> ```
+
+
+
+------
+
+# Starting up the SDK
+
+The SDK environment setup script must be run once in each new working terminal in which you cross-compile
+
+> ```bash
+> PC $> cd $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package 
+> PC $> source SDK/environment-setup-cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
+> ```
+
+The following checks allow to ensure that the environment is correctly setup:
+
+1. Check the target architecture
+
+> ```bash
+> PC $> echo $ARCH
+> arm
+> ```
+
+2. Check the toolchain binary prefix for the target tools
+
+> ```bash
+> PC $> echo $CROSS_COMPILE
+> arm-ostl-linux-gnueabi- /* For ecosystem release  v2.0.0   */
+> ```
+
+3. Check the C compiler version
+
+> ```bash
+> PC $> $CC --version
+> arm-ostl-linux-gnueabi-gcc (GCC) 9.3.0  /* For ecosystem release  v2.0.0   */
+> Copyright (C) 2019 Free Software Foundation, Inc.
+> This is free software; see the source for copying conditions.  There is NO
+> warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+> ```
+
+4. Check that the SDK version is the expected one
+
+> ```bash
+> PC $> echo $OECORE_SDK_VERSION
+> 3.1-openstlinux-5.4-dunfell-mp1-20-06-24 /* For ecosystem release  v2.0.0   */
+> ```
+
+* *If any of these commands fails or does not return the expected result, please try to reinstall the SDK*
