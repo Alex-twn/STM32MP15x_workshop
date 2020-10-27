@@ -15,9 +15,11 @@
 > ```
 >
 
-* *=> Should provide you the following terminal output if your internet connection is ok*
+* *Should provide you the following terminal output if your internet connection is ok*
 
 ![](/Pictures/2_Screenshot.png)
+
+
 
 
 
@@ -33,7 +35,7 @@
 > ```
 >
 
-* *=> Select the java-8-openjdk configuration*
+* *Select the java-8-openjdk configuration*
 
 2. Install OpenJFX for Ubuntu® 18.04
 
@@ -63,7 +65,7 @@
 
 [id0]: https://www.st.com/en/development-tools/stm32cubeprog.html#getsoftware-scroll
 
-* => Note : if you have copied the STM32CubeProgrammer installation file from the USB dongle, please copy this installation file in **$HOME/STM32MPU_workspace/tmp***
+* *Note : if you have copied the STM32CubeProgrammer installation file from the USB dongle, please copy this installation file in **$HOME/STM32MPU_workspace/tmp***
 
 6. Decompress the archive file to get the STM32CubeProgrammer installers
 
@@ -80,7 +82,7 @@
 > ```
 >
 
-- => Select **$HOME/STM32MPU_workspace/STM32MPU_tools/STM32CubeProgrammer-2.5.0** as the installation directory, when it's requested by the installer*
+- *Select **$HOME/STM32MPU_workspace/STM32MPU_tools/STM32CubeProgrammer-2.5.0** as the installation directory, when it's requested by the installer*
 
 8. Add the STM32CubeProgrammer binary path to your PATH environment variable (or .bashrc)
 
@@ -96,9 +98,11 @@
 > ```
 >
 
-* *=> Should provide you the following terminal output*
+* *Should provide you the following terminal output*
 
 ![](/Pictures/3_Screenshot.png)
+
+
 
 
 
@@ -123,6 +127,8 @@
 
 
 
+
+
 ------
 
 # Install STM32MP1 OpenSTLinux Starter Package on your host computer
@@ -140,14 +146,14 @@
 
    [id1]: https://www.st.com/content/ccc/resource/technical/software/firmware/group0/6a/12/67/7d/22/19/43/d4/STM32MP15_OpenSTLinux_Starter_Package/files/FLASH-stm32mp1-openstlinux-5-4-dunfell-mp1-20-06-24.tar.xz/_jcr_content/translations/en.FLASH-stm32mp1-openstlinux-5-4-dunfell-mp1-20-06-24.tar.xz
 
-    in **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Starter-Package**
-
 3. Decompress the tarball file to get the binaries for the different partitions of the image and the Flash layout files
 
 > ```bash
 > PC $> tar xvf en.FLASH-stm32mp1-openstlinux-5-4-dunfell-mp1-20-06-24.tar.x
 > ```
 >
+
+
 
 
 
@@ -202,6 +208,8 @@
 13. Set the boot switches (located at the back of the board) to the ON position
 
 ![](/Pictures/STM32MP157C-DK2_jumper_boot.jpg)
+
+
 
 
 
@@ -827,6 +835,8 @@ The serial terminal allows to communicate with the board trough a UART serial in
 
 
 
+
+
 ------
 
 # Install the SDK on your host computer
@@ -894,6 +904,8 @@ The SDK for OpenSTLinux distribution provides a stand-alone cross-development to
 
 
 
+
+
 ------
 
 # Start up the SDK on your host computer
@@ -940,9 +952,9 @@ The following checks allow to ensure that the environment is correctly setup
 
 * *If any of these commands fails or does not return the expected result, please try to reinstall the SDK*
 
-The SDK is in the *<SDK installation directory>*
+* *The SDK is in the **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/SDK** directory*
 
-> ```
+> ```text
 > <SDK installation directory>                                      SDK for OpenSTLinux distribution: details in Standard SDK directory structure article
 > ├── environment-setup-cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi  Environment setup script for Developer Package
 > ├── site-config-cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
@@ -953,6 +965,8 @@ The SDK is in the *<SDK installation directory>*
 > │       └── [...]
 > └── version-cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
 > ```
+
+
 
 
 
@@ -987,7 +1001,7 @@ The SDK is in the *<SDK installation directory>*
 
 - *The **Linux kernel installation directory** is in the **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-20-06-24/sources/arm-ostl-linux-gnueabi** directory, and is named **linux-stm32mp-5.4.31-r0***
 
-> ```
+> ```text
 > linux-stm32mp-5.4.31-r0     Linux kernel installation directory
 > ├── [*].patch             ST patches to apply during the Linux kernel preparation (see next chapter)
 > ├── fragment-[*].config   ST configuration fragments to apply during the Linux kernel configuration (see next chapter)
@@ -996,6 +1010,8 @@ The SDK is in the *<SDK installation directory>*
 > ├── README.HOW_TO.txt     Helper file for Linux kernel management: reference for Linux kernel build
 > └── series                List of all ST patches to apply
 > ```
+
+
 
 
 
