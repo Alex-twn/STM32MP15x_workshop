@@ -21,8 +21,6 @@
 
 
 
-
-
 ------
 
 # Install STM32CubeProgrammer on your host computer
@@ -61,9 +59,9 @@
 > ```
 >
 
-5. Download the latest [STM32CubeProgrammer][id0] in **$HOME/STM32MPU_workspace/tmp**
+5. Download the latest [STM32CubeProgrammer][STM32CubeProgrammer download link] in **$HOME/STM32MPU_workspace/tmp**
 
-[id0]: https://www.st.com/en/development-tools/stm32cubeprog.html#getsoftware-scroll
+[STM32CubeProgrammer download link]: https://www.st.com/en/development-tools/stm32cubeprog.html#getsoftware-scroll
 
 * *Note : if you have copied the STM32CubeProgrammer installation file from the USB dongle, please copy this installation file in **$HOME/STM32MPU_workspace/tmp***
 
@@ -104,8 +102,6 @@
 
 
 
-
-
 ------
 
 # Install USB serial link on your host computer
@@ -127,8 +123,6 @@
 
 
 
-
-
 ------
 
 # Install STM32MP1 OpenSTLinux Starter Package on your host computer
@@ -142,9 +136,9 @@
 > ```
 >
 
-2. Download the latest [STM32MP1 OpenSTLinux Starter Package][id1] Starter Package in **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Starter-Package**
+2. Download the latest [STM32MP1 OpenSTLinux Starter Package][Starter Package download link] Starter Package in **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Starter-Package**
 
-   [id1]: https://www.st.com/content/ccc/resource/technical/software/firmware/group0/6a/12/67/7d/22/19/43/d4/STM32MP15_OpenSTLinux_Starter_Package/files/FLASH-stm32mp1-openstlinux-5-4-dunfell-mp1-20-06-24.tar.xz/_jcr_content/translations/en.FLASH-stm32mp1-openstlinux-5-4-dunfell-mp1-20-06-24.tar.xz
+   [Starter Package download link]: https://www.st.com/content/ccc/resource/technical/software/firmware/group0/6a/12/67/7d/22/19/43/d4/STM32MP15_OpenSTLinux_Starter_Package/files/FLASH-stm32mp1-openstlinux-5-4-dunfell-mp1-20-06-24.tar.xz/_jcr_content/translations/en.FLASH-stm32mp1-openstlinux-5-4-dunfell-mp1-20-06-24.tar.xz
 
 3. Decompress the tarball file to get the binaries for the different partitions of the image and the Flash layout files
 
@@ -152,8 +146,6 @@
 > PC $> tar xvf en.FLASH-stm32mp1-openstlinux-5-4-dunfell-mp1-20-06-24.tar.x
 > ```
 >
-
-
 
 
 
@@ -208,8 +200,6 @@
 13. Set the boot switches (located at the back of the board) to the ON position
 
 ![](/Pictures/STM32MP157C-DK2_jumper_boot.jpg)
-
-
 
 
 
@@ -835,11 +825,9 @@ The serial terminal allows to communicate with the board trough a UART serial in
 
 
 
-
-
 ------
 
-# Install the SDK on your host computer
+# Install the Developer Package SDK on your host computer
 
 The SDK for OpenSTLinux distribution provides a stand-alone cross-development toolchain and libraries tailored to the contents of the specific image flashed in the board
 
@@ -860,11 +848,11 @@ The SDK for OpenSTLinux distribution provides a stand-alone cross-development to
 > PC $> sudo mv /tmp/mmc_block.conf /etc/modprobe.d/mmc_block.conf
 > ```
 
-3. Download the latest [Developer Package SDK][id2] in **$HOME/STM32MPU_workspace/tmp**
+3. Download the latest [Developer Package SDK][SDK download link] in **$HOME/STM32MPU_workspace/tmp**
 
-[id2]: https://www.st.com/content/ccc/resource/technical/software/sw_development_suite/group0/6f/5f/e6/0a/4c/c3/45/a9/stm32mp1dev_yocto_sdk/files/SDK-x86_64-stm32mp1-openstlinux-5.4-dunfell-mp1-20-06-24.tar.xz/_jcr_content/translations/en.SDK-x86_64-stm32mp1-openstlinux-5.4-dunfell-mp1-20-06-24.tar.xz
+[SDK download link]: https://www.st.com/content/ccc/resource/technical/software/sw_development_suite/group0/6f/5f/e6/0a/4c/c3/45/a9/stm32mp1dev_yocto_sdk/files/SDK-x86_64-stm32mp1-openstlinux-5.4-dunfell-mp1-20-06-24.tar.xz/_jcr_content/translations/en.SDK-x86_64-stm32mp1-openstlinux-5.4-dunfell-mp1-20-06-24.tar.xz
 
-4. Decompress the tarball file to get the SDK installation script
+4. Go to **$HOME/STM32MPU_workspace/tmp** directory and decompress the tarball file to get the SDK installation script
 
 > ```bash
 > PC $> cd $HOME/STM32MPU_workspace/tmp
@@ -904,11 +892,9 @@ The SDK for OpenSTLinux distribution provides a stand-alone cross-development to
 
 
 
-
-
 ------
 
-# Start up the SDK on your host computer
+# Verify that the SDK is working well on your host computer
 
 The SDK environment setup script must be run once in each new working terminal in which you cross-compile
 
@@ -968,15 +954,13 @@ The following checks allow to ensure that the environment is correctly setup
 
 
 
-
-
 ------
 
 # Install STM32MP1 OpenSTLinux Developer Package on your host computer
 
-1. Download the latest [STM32MP1 OpenSTLinux Developer Package][id3] in **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package**
+1. Download the latest [STM32MP1 OpenSTLinux Developer Package][Developer Package download link]] in **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package**
 
-[id3]: https://www.st.com/content/st_com/en/products/embedded-software/mcu-mpu-embedded-software/stm32-embedded-software/stm32-mpu-openstlinux-distribution/stm32mp1dev.html
+[Developer Package download link]: https://www.st.com/content/st_com/en/products/embedded-software/mcu-mpu-embedded-software/stm32-embedded-software/stm32-mpu-openstlinux-distribution/stm32mp1dev.html
 
 * *This package includes the following pieces of software in source code*
   * *Linux® kernel*
@@ -1013,6 +997,84 @@ The following checks allow to ensure that the environment is correctly setup
 
 
 
+------
+
+# Build and deploy the Linux kernel for this workshop
+
+This chapter will explain how to build the Linux kernel in order to make the STM32MP157A-DK1 board able to communicate with the X-NUCLEO-IKS01A3 sensor shield
+
+The X-NUCLEO-IKS01A3 sensor shield is an Arduino expansion board that includes several sensors like
+
+* Accelerometer (LIS2DW12)
+* Gyroscope (LSM6DS0)
+* Magnetic sensor (LIS2MDL)
+* Pressure sensor (LPS22HH)
+* Humidity and temperature (HTS221)
+
+The following section provides step-by-step instructions to
+
+1. Configure Linux software to support the X-NUCLEO-IKS01A3 sensor shield
+2. Activate and read the data from several sensors such as HTS221 and LIS2DW12
+
+### STM32MP157A-DK1 platform
+
+![](/Pictures/STM32MP157A-DK1.jpg)
+
+### X-NUCLEO-IKS01A3
+
+![](/Pictures/x-nucleo-iks01a3.jpg)
+
+First you have to connect the X-NUCLEO-IKS01A3 sensor shield on the Arduino connectors under the STM32MP157A-DK1 board
+
+Then the next step is to configure the Linux software in order to activate the X-NUCLEO-IKS01A3 sensor shield to the STM32MP157A-DK1 board
+
+This configuration is done by modifying the STM32MP157A-DK1 Linux kernel and managing some new device tree elements
+
+1. Kernel configuration
+
+   By default, only the HTS221 driver (temperature sensor) present on the X-NUCLEO-IKS01A3 expansion board is enabled in the kernel configuration
+
+   The device tree must be updated to declare and activate it
+
+   To check whether associated drivers are enabled inside the kernel, type the following commands (note here that the typed commands are for the board so must be entered in a terminal running minicom and communicating with the STM32MP157A-DK1 board using UART interface)
+
+```bash
+Board $>  cat /proc/config.gz | gunzip | grep HTS221
+CONFIG_HTS221=y
+CONFIG_HTS221_I2C=y
+CONFIG_HTS221_SPI=y
+
+Board $>  cat /proc/config.gz | gunzip | grep ST_PRESS
+CONFIG_IIO_ST_PRESS=m
+CONFIG_IIO_ST_PRESS_I2C=m
+CONFIG_IIO_ST_PRESS_SPI=m
+
+Board $>  cat /proc/config.gz | gunzip |  grep ST_LSM6DS
+CONFIG_IIO_ST_LSM6DSX=m
+CONFIG_IIO_ST_LSM6DSX_I2C=m
+CONFIG_IIO_ST_LSM6DSX_SPI=m
+```
+
+2. Kernel device tree configuration
+
+   According to X-NUCLEO-IKS01A3 [user manual][X-NUCLEO-IKS01A3 user manual], all the sensors on the board are controlled by I2C bus
+
+   Looking at X-NUCLEO-IKS01A3 schematics in the user manual, we understand that all the I2C buses of the sensors are wired together via jumpers JP7 and JP8 and routed to Arduino connector CN5 pins 9 (SDA) and 10 (SCL)
+
+   In addition, pins 5 and 6 of Arduino connector CN9 are used to manage LSM6DSL motion MEMS interruptions (indicated for information, not used on kernel configuration)
+
+   [X-NUCLEO-IKS01A3 user manual]: https://www.st.com/resource/en/user_manual/dm00601501-getting-started-with-the-xnucleoiks01a3-motion-mems-and-environmental-sensor-expansion-board-for-stm32-nucleo-stmicroelectronics.pdf
+
+ ![](/Pictures/Arduino_X-NUCLEO-IKS01A3.JPG)
+
+3. Then looking at STM32MP157Z-DK1 schematics in the [user manual][STM32MP157A-DK1 user manual], we understand that Arduino connector CN13 pins 9 (SDA) and 10 (SCL) are connected to the I2C bus #5 of STM32MP157A
+
+   [STM32MP157A-DK1 user manual ]: https://www.st.com/content/ccc/resource/technical/layouts_and_diagrams/schematic_pack/group0/36/8e/ea/7a/ca/ca/4b/e4/mb1272-dk2-c01_schematic/files/MB1272-DK2-C01_Schematic.pdf/jcr:content/translations/en.MB1272-DK2-C01_Schematic.pdf
+
+4. In addition, pins 5 and 6 of Arduino connector CN14 are used to manage LSM6DSL motion MEMS interruptions (indicated for information, not used on kernel configuration)
+
+   ![](/Pictures/Arduino_STM32MP157A-DK1.JPG)
+
 
 
 ------
@@ -1025,25 +1087,38 @@ The following checks allow to ensure that the environment is correctly setup
 > PC $> source $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/SDK/environment-setup-cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
 > ```
 
-2. Go to **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-20-06-24/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.31-r0/linux-5.4.31** directory
+2. Copy the folder **sensor_patches** in **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-20-06-24/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.31-r0** directory
+
+> ```bash
+> PC $> cp -R sensor_patches $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-20-06-24/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.31-r0
+> ```
+
+3. Copy the folder **st** in **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-20-06-24/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.31-r0/linux-5.4.31/drivers/input/misc** directory
+
+> ```bash
+> PC $> cp -R st $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-20-06-24/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.31-r0/linux-5.4.31/drivers/input/misc
+> ```
+
+4. Go to **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-20-06-24/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.31-r0/linux-5.4.31** directory
 
 > ```bash
 > PC $> cd $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-20-06-24/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.31-r0/linux-5.4.31
 > ```
 
-3. Apply the ST patches
+5. Apply the ST patches and the sensor patches
 
 > ```bash
 > PC $> for p in `ls -1 ../*.patch`; do patch -p1 < $p; done
+> PC $> for p in `ls -1 ../sensor_patches/*.patch`; do patch -p1 < $p; done
 > ```
 
-4. Create a directory where the kernel will be built
+6. Create a directory where the kernel will be built
 
 > ```bash
 > PC $> mkdir -p ../build
 > ```
 
-5. Make and apply fragments
+7. Make and apply fragments
 
 > ```bash
 > PC $> make ARCH=arm O="$PWD/../build" multi_v7_defconfig fragment*.config
@@ -1051,7 +1126,7 @@ The following checks allow to ensure that the environment is correctly setup
 > PC $> yes '' | make ARCH=arm oldconfig O="$PWD/../build"
 > ```
 
-6. Compile kernel source code
+8. Compile kernel source code
 
 * Build kernel images (uImage and vmlinux) and device tree (dtbs)
 
