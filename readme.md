@@ -1094,13 +1094,17 @@ For that, add the following content into **stm32mp157a-dk1.dts** file:
 		compatible = "st,hts221";
 		reg = <0x5f>;
 	};
-	lis2dw12@18 {
+	lis2dw12@19 {
 		compatible = "st,lis2dw12";
-		reg = <0x18>;
+		reg = <0x19>;
 	}
-	lsm6ds0@6a {
+	lsm6ds0@6b {
 		compatible = "st,lsm6ds0";
-		reg = <0x6a>;
+		reg = <0x6b>;
+	};
+	lps22hh@5d {
+		compatible = "st,lps22hh";
+		reg = <0x5d>;
 	};
  };
 ```
