@@ -1066,8 +1066,9 @@ The first thing to do is to verify if the I2C5 is active in the current Linux ke
 
 This command will return **disabled** so we have to enable the I2C5 into STM32MP157A-DK1 device tree and few nodes must be added for each sensor to be supported
 
+For that, add the following content into **stm32mp157a-dk1.dts** file located in **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-20-06-24/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.31-r0/linux-5.4.31/arch/arm/boot/dts** directory
 
-For that, add the following content into **stm32mp157a-dk1.dts** file:
+To edit **stm32mp157a-dk1.dts**, you can use an application like **nano**
 
 > ```
 > &i2c5 {
@@ -1127,7 +1128,7 @@ But the same commands for the other sensors
 
 Returns nothing (or that the configuration is not set) which means that we need to patch the Linux kernel adding the missing sensor drivers
 
-### 2.3 Patching the Linux kernel with the missing sensor drivers
+### 2.3 Patching the Linux kernel with the missing sensor drivers and enabling the sensors
 
 1. If not done yet, the SDK environment setup script must be run once to allow further cross-compilation
 
@@ -1160,23 +1161,44 @@ Returns nothing (or that the configuration is not set) which means that we need 
 > PC $> for p in `ls -1 ../sensor_patches/*.patch`; do patch -p1 < $p; done
 > ```
 
-### 2.4 Building and deploying the Linux kernel
-
-1. Create a directory where the kernel will be built
+6. Create a directory where the kernel will be built
 
 > ```bash
 > PC $> mkdir -p ../build
 > ```
 
-2. Make and apply fragments
+7. Make and apply fragments
 
 > ```bash
-> PC $> make ARCH=arm O="$PWD/../build" multi_v7_defconfig fragment*.config
+> PC $> make ARCH=arm multi_v7_defconfig fragment*.config O="$PWD/../build"
 > PC $> for f in `ls -1 ../fragment*.config`; do scripts/kconfig/merge_config.sh -m -r -O $PWD/../build $PWD/../build/.config $f; done
 > PC $> yes '' | make ARCH=arm oldconfig O="$PWD/../build"
 > ```
 
-3. Compile kernel source code
+8. In order to enable the sensors, we need to run the Linux kernel configuration with the following command
+
+> ```bash
+> PC $> make ARCH=arm menuconfig O="$PWD/../build"
+> ```
+
+- Then go to **Device Drivers > Input device support > Miscellaneous devices**
+- Highlight **STM MEMs Device Drivers (NEW)**, type **y** then enter **STM MEMs Device Drivers (NEW)**
+- Highlight **Inertial motion unit**, type **y** then enter **Inertial motion unit**
+- Highlight **STMicroelectronics LSM6DS0 sensor** then type **y**
+- Do double esc to go  back to go back to **STM MEMs Device Drivers** menu
+- Highlight **accelerometer**, type **y** then enter **accelerometer**
+- Highlight **STMicroelectronics LIS2DW12 sensor** then type **y**
+- Do double esc to go  back to go back to **STM MEMs Device Drivers** menu
+- Highlight **humidity**, type **y** then enter **humidity**
+- Highlight **STM HTS221 sensor** then type **y**
+- Do double esc to go  back to go back to **STM MEMs Device Drivers** menu
+- Highlight **magnetometer**, type **y** then enter **magnetometer**
+- Highlight **STM LIS2MDL/IIS2MDC sensor** then type **y**
+- Do double esc to go  back to go back to **STM MEMs Device Drivers** menu
+
+### 2.4 Building and deploying the Linux kernel
+
+1. Compile kernel source code
 
 * Build kernel images (uImage and vmlinux) and device tree (dtbs)
 
