@@ -125,7 +125,7 @@
 
 ------
 
-# Install STM32MP1 OpenSTLinux Starter Package on your host computer
+# Install OpenSTLinux Starter Package on your host computer
 
 1. Create your STM32MP15x Starter Package directory
 
@@ -146,6 +146,178 @@
 > PC $> tar xvf en.FLASH-stm32mp1-openstlinux-5-4-dunfell-mp1-20-06-24.tar.x
 > ```
 >
+
+
+
+------
+
+# Install OpenSTLinux Developer Package SDK on your host computer
+
+The SDK for OpenSTLinux distribution provides a stand-alone cross-development toolchain and libraries tailored to the contents of the specific image flashed in the board
+
+1. In order to do basic development tasks or basic cross-compilation, some extra Ubuntu packages should be installed
+
+> ```bash
+> PC $> sudo apt-get update
+> PC $> sudo apt-get install sed wget curl cvs subversion git-core coreutils unzip texi2html texinfo docbook-utils gawk python-pysqlite2 diffstat help2man make gcc build-essential g++ desktop-file-utils chrpath libxml2-utils xmlto docbook bsdmainutils iputils-ping cpio python-wand python-pycryptopp python-crypto
+> PC $> sudo apt-get install libsdl1.2-dev xterm corkscrew nfs-common nfs-kernel-server device-tree-compiler mercurial u-boot-tools libarchive-zip-perl
+> PC $> sudo apt-get install ncurses-dev bc linux-headers-generic gcc-multilib libncurses5-dev libncursesw5-dev lrzsz dos2unix lib32ncurses5 repo libssl-dev libyaml-dev
+> PC $> sudo apt-get install default-jre
+> ```
+
+2. By default, on Linux system, a maximum of 8 partitions are allowed on mmc. All Packages (Starter Package, ...) need more than 10 partitions for the storage device. In order to extend the number of partitions per device to 16, the following options must be added to modprobe
+
+> ```bash
+> PC $> echo 'options mmc_block perdev_minors=16' > /tmp/mmc_block.conf
+> PC $> sudo mv /tmp/mmc_block.conf /etc/modprobe.d/mmc_block.conf
+> ```
+
+3. Download the latest [Developer Package SDK][SDK download link] in **$HOME/STM32MPU_workspace/tmp**
+
+[SDK download link]: https://www.st.com/content/ccc/resource/technical/software/sw_development_suite/group0/6f/5f/e6/0a/4c/c3/45/a9/stm32mp1dev_yocto_sdk/files/SDK-x86_64-stm32mp1-openstlinux-5.4-dunfell-mp1-20-06-24.tar.xz/_jcr_content/translations/en.SDK-x86_64-stm32mp1-openstlinux-5.4-dunfell-mp1-20-06-24.tar.xz
+
+4. Go to **$HOME/STM32MPU_workspace/tmp** directory and decompress the tarball file to get the SDK installation script
+
+> ```bash
+> PC $> cd $HOME/STM32MPU_workspace/tmp
+> PC $> tar xvf en.SDK-x86_64-stm32mp1-openstlinux-5.4-dunfell-mp1-20-06-24.tar.xz
+> ```
+
+5. Create your STM32MP15x Developer Package SDK directory
+
+> ```bash
+> PC $> mkdir -p $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/SDK
+> ```
+
+6. Change the permissions of the SDK installation script so that it is executable
+
+> ```bash
+> PC $> chmod +x stm32mp1-openstlinux-5.4-dunfell-mp1-20-06-24/sdk/st-image-weston-openstlinux-weston-stm32mp1-x86_64-toolchain-3.1-openstlinux-5.4-dunfell-mp1-20-06-24.sh
+> ```
+
+7. Execute the SDK installation script
+
+> ```bash
+> PC $> ./stm32mp1-openstlinux-5.4-dunfell-mp1-20-06-24/sdk/st-image-weston-openstlinux-weston-stm32mp1-x86_64-toolchain-3.1-openstlinux-5.4-dunfell-mp1-20-06-24.sh -d <working directory absolute path>/Developer-Package/SDK
+> ```
+
+* *A successful installation outputs the following log*
+
+> ```bash
+> ST OpenSTLinux - Weston - (A Yocto Project Based Distro) SDK installer version 3.1-openstlinux-5.4-dunfell-mp1-20-06-24
+> =======================================================================================================================
+> You are about to install the SDK to "/home/osboxes/MCD/V2.0/Developper-Package/SDK". Proceed [Y/n]? Y
+> Extracting SDK................................................................................................................................................................................................................done
+> Setting it up...done
+> SDK has been successfully set up and is ready to be used.
+> Each time you wish to use the SDK in a new shell session, you need to source the environment setup script e.g.
+>  $ . /<working directory absolute path>/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/SDK/en
+> ```
+
+
+
+------
+
+# Verify that the SDK is working well on your host computer
+
+The SDK environment setup script must be run once in each new working terminal in which you cross-compile
+
+> ```bash
+> PC $> cd $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/SDK
+> PC $> source environment-setup-cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
+> ```
+
+The following checks allow to ensure that the environment is correctly setup
+
+1. Check the target architecture
+
+> ```bash
+> PC $> echo $ARCH
+> arm
+> ```
+
+2. Check the toolchain binary prefix for the target tools
+
+> ```bash
+> PC $> echo $CROSS_COMPILE
+> arm-ostl-linux-gnueabi- /* For ecosystem release  v2.0.0   */
+> ```
+
+3. Check the C compiler version
+
+> ```bash
+> PC $> $CC --version
+> arm-ostl-linux-gnueabi-gcc (GCC) 9.3.0  /* For ecosystem release  v2.0.0   */
+> Copyright (C) 2019 Free Software Foundation, Inc.
+> This is free software; see the source for copying conditions.  There is NO
+> warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+> ```
+
+4. Check that the SDK version is the expected one
+
+> ```bash
+> PC $> echo $OECORE_SDK_VERSION
+> 3.1-openstlinux-5.4-dunfell-mp1-20-06-24 /* For ecosystem release  v2.0.0   */
+> ```
+
+* *If any of these commands fails or does not return the expected result, please try to reinstall the SDK*
+
+* *The SDK is in the **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/SDK** directory*
+
+> ```text
+> <SDK installation directory>                                      SDK for OpenSTLinux distribution: details in Standard SDK directory structure article
+> ├── environment-setup-cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi  Environment setup script for Developer Package
+> ├── site-config-cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
+> ├── sysroots
+> │   ├── cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi                Target sysroot (libraries, headers, and symbols)
+> │   │   └── [...]
+> │   └── x86_64-ostl_sdk-linux                                     Native sysroot (libraries, headers, and symbols)
+> │       └── [...]
+> └── version-cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
+> ```
+
+
+
+------
+
+# Install OpenSTLinux Developer Package on your host computer
+
+1. Download the latest [STM32MP1 OpenSTLinux Developer Package][Developer Package download link]] in **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package**
+
+[Developer Package download link]: https://www.st.com/content/st_com/en/products/embedded-software/mcu-mpu-embedded-software/stm32-embedded-software/stm32-mpu-openstlinux-distribution/stm32mp1dev.html
+
+* *This package includes the following pieces of software in source code*
+  * *Linux® kernel*
+  * *U-Boot*
+  * *Trusted firmware-A (TF-A)*
+  * *An optional open source trusted execution environment (OP-TEE)*
+
+2. Go to **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package** directory
+
+> ```bash
+> PC $> cd $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package
+> ```
+
+3. Decompress the tarball file to get the Linux kernel (Linux kernel source code, ST patches, ST configuration fragments...)
+
+> ```bash
+> PC $> tar xvf en.SOURCES-kernel-stm32mp1-openstlinux-5-4-dunfell-mp1-20-06-24.tar.xz
+> PC $> cd stm32mp1-openstlinux-5.4-dunfell-mp1-20-06-24/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.31-r0
+> PC $> tar xvf linux-5.4.31.tar.xz
+> PC $> cd linux-5.4.31 
+> ```
+
+- *The **Linux kernel installation directory** is in the **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-20-06-24/sources/arm-ostl-linux-gnueabi** directory, and is named **linux-stm32mp-5.4.31-r0***
+
+> ```text
+> linux-stm32mp-5.4.31-r0     Linux kernel installation directory
+> ├── [*].patch             ST patches to apply during the Linux kernel preparation (see next chapter)
+> ├── fragment-[*].config   ST configuration fragments to apply during the Linux kernel configuration (see next chapter)
+> ├── linux-5.4.31          Linux kernel source code directory
+> ├── linux-5.4.31.tar.xz   Tarball file of the Linux kernel source code
+> ├── README.HOW_TO.txt     Helper file for Linux kernel management: reference for Linux kernel build
+> └── series                List of all ST patches to apply
+> ```
 
 
 
@@ -827,178 +999,6 @@ The serial terminal allows to communicate with the board trough a UART serial in
 
 ------
 
-# Install the Developer Package SDK on your host computer
-
-The SDK for OpenSTLinux distribution provides a stand-alone cross-development toolchain and libraries tailored to the contents of the specific image flashed in the board
-
-1. In order to do basic development tasks or basic cross-compilation, some extra Ubuntu packages should be installed
-
-> ```bash
-> PC $> sudo apt-get update
-> PC $> sudo apt-get install sed wget curl cvs subversion git-core coreutils unzip texi2html texinfo docbook-utils gawk python-pysqlite2 diffstat help2man make gcc build-essential g++ desktop-file-utils chrpath libxml2-utils xmlto docbook bsdmainutils iputils-ping cpio python-wand python-pycryptopp python-crypto
-> PC $> sudo apt-get install libsdl1.2-dev xterm corkscrew nfs-common nfs-kernel-server device-tree-compiler mercurial u-boot-tools libarchive-zip-perl
-> PC $> sudo apt-get install ncurses-dev bc linux-headers-generic gcc-multilib libncurses5-dev libncursesw5-dev lrzsz dos2unix lib32ncurses5 repo libssl-dev libyaml-dev
-> PC $> sudo apt-get install default-jre
-> ```
-
-2. By default, on Linux system, a maximum of 8 partitions are allowed on mmc. All Packages (Starter Package, ...) need more than 10 partitions for the storage device. In order to extend the number of partitions per device to 16, the following options must be added to modprobe
-
-> ```bash
-> PC $> echo 'options mmc_block perdev_minors=16' > /tmp/mmc_block.conf
-> PC $> sudo mv /tmp/mmc_block.conf /etc/modprobe.d/mmc_block.conf
-> ```
-
-3. Download the latest [Developer Package SDK][SDK download link] in **$HOME/STM32MPU_workspace/tmp**
-
-[SDK download link]: https://www.st.com/content/ccc/resource/technical/software/sw_development_suite/group0/6f/5f/e6/0a/4c/c3/45/a9/stm32mp1dev_yocto_sdk/files/SDK-x86_64-stm32mp1-openstlinux-5.4-dunfell-mp1-20-06-24.tar.xz/_jcr_content/translations/en.SDK-x86_64-stm32mp1-openstlinux-5.4-dunfell-mp1-20-06-24.tar.xz
-
-4. Go to **$HOME/STM32MPU_workspace/tmp** directory and decompress the tarball file to get the SDK installation script
-
-> ```bash
-> PC $> cd $HOME/STM32MPU_workspace/tmp
-> PC $> tar xvf en.SDK-x86_64-stm32mp1-openstlinux-5.4-dunfell-mp1-20-06-24.tar.xz
-> ```
-
-5. Create your STM32MP15x Developer Package SDK directory
-
-> ```bash
-> PC $> mkdir -p $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/SDK
-> ```
-
-6. Change the permissions of the SDK installation script so that it is executable
-
-> ```bash
-> PC $> chmod +x stm32mp1-openstlinux-5.4-dunfell-mp1-20-06-24/sdk/st-image-weston-openstlinux-weston-stm32mp1-x86_64-toolchain-3.1-openstlinux-5.4-dunfell-mp1-20-06-24.sh
-> ```
-
-7. Execute the SDK installation script
-
-> ```bash
-> PC $> ./stm32mp1-openstlinux-5.4-dunfell-mp1-20-06-24/sdk/st-image-weston-openstlinux-weston-stm32mp1-x86_64-toolchain-3.1-openstlinux-5.4-dunfell-mp1-20-06-24.sh -d <working directory absolute path>/Developer-Package/SDK
-> ```
-
-* *A successful installation outputs the following log*
-
-> ```bash
-> ST OpenSTLinux - Weston - (A Yocto Project Based Distro) SDK installer version 3.1-openstlinux-5.4-dunfell-mp1-20-06-24
-> =======================================================================================================================
-> You are about to install the SDK to "/home/osboxes/MCD/V2.0/Developper-Package/SDK". Proceed [Y/n]? Y
-> Extracting SDK................................................................................................................................................................................................................done
-> Setting it up...done
-> SDK has been successfully set up and is ready to be used.
-> Each time you wish to use the SDK in a new shell session, you need to source the environment setup script e.g.
->  $ . /<working directory absolute path>/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/SDK/en
-> ```
-
-
-
-------
-
-# Verify that the SDK is working well on your host computer
-
-The SDK environment setup script must be run once in each new working terminal in which you cross-compile
-
-> ```bash
-> PC $> cd $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/SDK
-> PC $> source environment-setup-cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
-> ```
-
-The following checks allow to ensure that the environment is correctly setup
-
-1. Check the target architecture
-
-> ```bash
-> PC $> echo $ARCH
-> arm
-> ```
-
-2. Check the toolchain binary prefix for the target tools
-
-> ```bash
-> PC $> echo $CROSS_COMPILE
-> arm-ostl-linux-gnueabi- /* For ecosystem release  v2.0.0   */
-> ```
-
-3. Check the C compiler version
-
-> ```bash
-> PC $> $CC --version
-> arm-ostl-linux-gnueabi-gcc (GCC) 9.3.0  /* For ecosystem release  v2.0.0   */
-> Copyright (C) 2019 Free Software Foundation, Inc.
-> This is free software; see the source for copying conditions.  There is NO
-> warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-> ```
-
-4. Check that the SDK version is the expected one
-
-> ```bash
-> PC $> echo $OECORE_SDK_VERSION
-> 3.1-openstlinux-5.4-dunfell-mp1-20-06-24 /* For ecosystem release  v2.0.0   */
-> ```
-
-* *If any of these commands fails or does not return the expected result, please try to reinstall the SDK*
-
-* *The SDK is in the **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/SDK** directory*
-
-> ```text
-> <SDK installation directory>                                      SDK for OpenSTLinux distribution: details in Standard SDK directory structure article
-> ├── environment-setup-cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi  Environment setup script for Developer Package
-> ├── site-config-cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
-> ├── sysroots
-> │   ├── cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi                Target sysroot (libraries, headers, and symbols)
-> │   │   └── [...]
-> │   └── x86_64-ostl_sdk-linux                                     Native sysroot (libraries, headers, and symbols)
-> │       └── [...]
-> └── version-cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
-> ```
-
-
-
-------
-
-# Install STM32MP1 OpenSTLinux Developer Package on your host computer
-
-1. Download the latest [STM32MP1 OpenSTLinux Developer Package][Developer Package download link]] in **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package**
-
-[Developer Package download link]: https://www.st.com/content/st_com/en/products/embedded-software/mcu-mpu-embedded-software/stm32-embedded-software/stm32-mpu-openstlinux-distribution/stm32mp1dev.html
-
-* *This package includes the following pieces of software in source code*
-  * *Linux® kernel*
-  * *U-Boot*
-  * *Trusted firmware-A (TF-A)*
-  * *An optional open source trusted execution environment (OP-TEE)*
-
-2. Go to **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package** directory
-
-> ```bash
-> PC $> cd $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package
-> ```
-
-3. Decompress the tarball file to get the Linux kernel (Linux kernel source code, ST patches, ST configuration fragments...)
-
-> ```bash
-> PC $> tar xvf en.SOURCES-kernel-stm32mp1-openstlinux-5-4-dunfell-mp1-20-06-24.tar.xz
-> PC $> cd stm32mp1-openstlinux-5.4-dunfell-mp1-20-06-24/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.31-r0
-> PC $> tar xvf linux-5.4.31.tar.xz
-> PC $> cd linux-5.4.31 
-> ```
-
-- *The **Linux kernel installation directory** is in the **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-20-06-24/sources/arm-ostl-linux-gnueabi** directory, and is named **linux-stm32mp-5.4.31-r0***
-
-> ```text
-> linux-stm32mp-5.4.31-r0     Linux kernel installation directory
-> ├── [*].patch             ST patches to apply during the Linux kernel preparation (see next chapter)
-> ├── fragment-[*].config   ST configuration fragments to apply during the Linux kernel configuration (see next chapter)
-> ├── linux-5.4.31          Linux kernel source code directory
-> ├── linux-5.4.31.tar.xz   Tarball file of the Linux kernel source code
-> ├── README.HOW_TO.txt     Helper file for Linux kernel management: reference for Linux kernel build
-> └── series                List of all ST patches to apply
-> ```
-
-
-
-------
-
 # Build and deploy the Linux kernel for this workshop
 
 This chapter will explain how to build the Linux kernel in order to make the STM32MP157A-DK1 board able to communicate with the X-NUCLEO-IKS01A3 sensor shield
@@ -1067,13 +1067,49 @@ CONFIG_IIO_ST_LSM6DSX_SPI=m
 
  ![](/Pictures/Arduino_X-NUCLEO-IKS01A3.JPG)
 
-3. Then looking at STM32MP157Z-DK1 schematics in the [user manual][STM32MP157A-DK1 user manual], we understand that Arduino connector CN13 pins 9 (SDA) and 10 (SCL) are connected to the I2C bus #5 of STM32MP157A
+3. Then looking at STM32MP157Z-DK1 schematics in the [user manual][STM32MP157A-DK1 user manual], we understand that Arduino connector CN13 pins 9 (SDA) and 10 (SCL) are connected to the I2C5 of STM32MP157A
 
    [STM32MP157A-DK1 user manual ]: https://www.st.com/content/ccc/resource/technical/layouts_and_diagrams/schematic_pack/group0/36/8e/ea/7a/ca/ca/4b/e4/mb1272-dk2-c01_schematic/files/MB1272-DK2-C01_Schematic.pdf/jcr:content/translations/en.MB1272-DK2-C01_Schematic.pdf
 
 4. In addition, pins 5 and 6 of Arduino connector CN14 are used to manage LSM6DSL motion MEMS interruptions (indicated for information, not used on kernel configuration)
 
    ![](/Pictures/Arduino_STM32MP157A-DK1.JPG)
+
+So the first thing to do is to verify if the I2C5 is active in the current Linux kernel we just flashed on STM32MP157A-DK1 board
+
+```bash
+board$ > cat /proc/device-tree/soc/i2c@40015000/status
+```
+
+This command will return disabled so we have to enable the I2C5 into STM32MP157A-DK1 device tree and a node must be added for each hardware to be supported (see entries like **hts221**, as shown in the device tree content example below)
+
+
+For that, add the following content into **stm32mp157a-dk1.dts** file:
+
+```
+ &i2c5 {
+	status = "okay";
+
+	hts221@5f {
+		compatible = "st,hts221";
+		reg = <0x5f>;
+	};
+	lis2dw12@18 {
+		compatible = "st,lis2dw12";
+		reg = <0x18>;
+	}
+	lsm6ds0@6a {
+		compatible = "st,lsm6ds0";
+		reg = <0x6a>;
+	};
+ };
+```
+
+
+
+
+
+
 
 
 
