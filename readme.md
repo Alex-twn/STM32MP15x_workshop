@@ -1010,78 +1010,61 @@ The X-NUCLEO-IKS01A3 sensor shield is an Arduino expansion board that includes s
 * Magnetic sensor (LIS2MDL)
 * Pressure sensor (LPS22HH)
 * Humidity and temperature (HTS221)
+* Temperature (STTS751)
 
-The following section provides step-by-step instructions to
 
-1. Configure Linux software to support the X-NUCLEO-IKS01A3 sensor shield
-2. Activate and read the data from several sensors such as HTS221 and LIS2DW12
 
-### STM32MP157A-DK1 platform
+## 1. Hardware configuration
+
+### 1.1 Platforms
+
+​		First you have to connect the X-NUCLEO-IKS01A3 sensor shield on the Arduino connectors under the STM32MP157A-DK1 board
+
+​		**STM32MP157A-DK1 board**
 
 ![](/Pictures/STM32MP157A-DK1.jpg)
 
-### X-NUCLEO-IKS01A3
+​		**X-NUCLEO-IKS01A3 sensor shield**
 
 ![](/Pictures/x-nucleo-iks01a3.jpg)
 
-First you have to connect the X-NUCLEO-IKS01A3 sensor shield on the Arduino connectors under the STM32MP157A-DK1 board
-
-Then the next step is to configure the Linux software in order to activate the X-NUCLEO-IKS01A3 sensor shield to the STM32MP157A-DK1 board
+The next step is to configure the Linux software in order to let the X-NUCLEO-IKS01A3 sensor shield communicate with the STM32MP157A-DK1 board
 
 This configuration is done by modifying the STM32MP157A-DK1 Linux kernel and managing some new device tree elements
 
-1. Kernel configuration
+### 1.2 Connectivity details
 
-   By default, only the HTS221 driver (temperature sensor) present on the X-NUCLEO-IKS01A3 expansion board is enabled in the kernel configuration
+According to X-NUCLEO-IKS01A3 [user manual][X-NUCLEO-IKS01A3 user manual], all the sensors on the board are controlled by I2C bus
 
-   The device tree must be updated to declare and activate it
+Looking at X-NUCLEO-IKS01A3 schematics in the user manual, we understand that all the I2C buses of the sensors are wired together via jumpers JP7 and JP8 and routed to Arduino connector CN5 pins 9 (SDA) and 10 (SCL)
 
-   To check whether associated drivers are enabled inside the kernel, type the following commands (note here that the typed commands are for the board so must be entered in a terminal running minicom and communicating with the STM32MP157A-DK1 board using UART interface)
+In addition, pins 5 and 6 of Arduino connector CN9 are used to manage LSM6DSL motion MEMS interruptions (indicated for information, not used on kernel configuration)
 
-```bash
-Board $>  cat /proc/config.gz | gunzip | grep HTS221
-CONFIG_HTS221=y
-CONFIG_HTS221_I2C=y
-CONFIG_HTS221_SPI=y
-
-Board $>  cat /proc/config.gz | gunzip | grep ST_PRESS
-CONFIG_IIO_ST_PRESS=m
-CONFIG_IIO_ST_PRESS_I2C=m
-CONFIG_IIO_ST_PRESS_SPI=m
-
-Board $>  cat /proc/config.gz | gunzip |  grep ST_LSM6DS
-CONFIG_IIO_ST_LSM6DSX=m
-CONFIG_IIO_ST_LSM6DSX_I2C=m
-CONFIG_IIO_ST_LSM6DSX_SPI=m
-```
-
-2. Kernel device tree configuration
-
-   According to X-NUCLEO-IKS01A3 [user manual][X-NUCLEO-IKS01A3 user manual], all the sensors on the board are controlled by I2C bus
-
-   Looking at X-NUCLEO-IKS01A3 schematics in the user manual, we understand that all the I2C buses of the sensors are wired together via jumpers JP7 and JP8 and routed to Arduino connector CN5 pins 9 (SDA) and 10 (SCL)
-
-   In addition, pins 5 and 6 of Arduino connector CN9 are used to manage LSM6DSL motion MEMS interruptions (indicated for information, not used on kernel configuration)
-
-   [X-NUCLEO-IKS01A3 user manual]: https://www.st.com/resource/en/user_manual/dm00601501-getting-started-with-the-xnucleoiks01a3-motion-mems-and-environmental-sensor-expansion-board-for-stm32-nucleo-stmicroelectronics.pdf
+[X-NUCLEO-IKS01A3 user manual]: https://www.st.com/resource/en/user_manual/dm00601501-getting-started-with-the-xnucleoiks01a3-motion-mems-and-environmental-sensor-expansion-board-for-stm32-nucleo-stmicroelectronics.pdf
 
  ![](/Pictures/Arduino_X-NUCLEO-IKS01A3.JPG)
 
-3. Then looking at STM32MP157Z-DK1 schematics in the [user manual][STM32MP157A-DK1 user manual], we understand that Arduino connector CN13 pins 9 (SDA) and 10 (SCL) are connected to the I2C5 of STM32MP157A
+Then looking at STM32MP157Z-DK1 schematics in the [user manual][STM32MP157A-DK1 user manual], we understand that Arduino connector CN13 pins 9 (SDA) and 10 (SCL) are connected to the I2C5 of STM32MP157A
 
-   [STM32MP157A-DK1 user manual ]: https://www.st.com/content/ccc/resource/technical/layouts_and_diagrams/schematic_pack/group0/36/8e/ea/7a/ca/ca/4b/e4/mb1272-dk2-c01_schematic/files/MB1272-DK2-C01_Schematic.pdf/jcr:content/translations/en.MB1272-DK2-C01_Schematic.pdf
+[STM32MP157A-DK1 user manual ]: https://www.st.com/content/ccc/resource/technical/layouts_and_diagrams/schematic_pack/group0/36/8e/ea/7a/ca/ca/4b/e4/mb1272-dk2-c01_schematic/files/MB1272-DK2-C01_Schematic.pdf/jcr:content/translations/en.MB1272-DK2-C01_Schematic.pdf
 
-4. In addition, pins 5 and 6 of Arduino connector CN14 are used to manage LSM6DSL motion MEMS interruptions (indicated for information, not used on kernel configuration)
+In addition, pins 5 and 6 of Arduino connector CN14 are used to manage LSM6DSL motion MEMS interruptions (indicated for information, not used on kernel configuration)
 
-   ![](/Pictures/Arduino_STM32MP157A-DK1.JPG)
+![](/Pictures/Arduino_STM32MP157A-DK1.JPG)
 
-So the first thing to do is to verify if the I2C5 is active in the current Linux kernel we just flashed on STM32MP157A-DK1 board
+
+
+## 2. Software configuration
+
+### 2.1 Kernel device tree configuration
+
+The first thing to do is to verify if the I2C5 is active in the current Linux kernel we just flashed on STM32MP157A-DK1 board
 
 ```bash
 board$ > cat /proc/device-tree/soc/i2c@40015000/status
 ```
 
-This command will return disabled so we have to enable the I2C5 into STM32MP157A-DK1 device tree and a node must be added for each hardware to be supported (see entries like **hts221**, as shown in the device tree content example below)
+This command will return **disabled** so we have to enable the I2C5 into STM32MP157A-DK1 device tree and few nodes must be added for each sensor to be supported
 
 
 For that, add the following content into **stm32mp157a-dk1.dts** file:
@@ -1105,21 +1088,46 @@ For that, add the following content into **stm32mp157a-dk1.dts** file:
 	lps22hh@5d {
 		compatible = "st,lps22hh";
 		reg = <0x5d>;
+	};	
+	stts751@4a {
+		compatible = "st,stts751";
+		reg = <0x4a>;
+	};
+	lis2mdl@1e {
+		compatible = "st,lis2mdl";
+		reg = <0x1e>;
 	};
  };
 ```
 
+### 2.2 Sensor configuration
 
+By default, only the HTS221 driver (temperature sensor) present on the X-NUCLEO-IKS01A3 expansion board is enabled in the kernel configuration
 
+To check whether associated drivers are enabled inside the kernel, type the following commands
 
+```bash
+Board $>  cat /proc/config.gz | gunzip | grep HTS221
+CONFIG_HTS221=y
+CONFIG_HTS221_I2C=y
+CONFIG_HTS221_SPI=y
+```
 
+Shows that HTS221 is enabled
 
+But the same commands for the other sensors
 
+```bash
+Board $>  cat /proc/config.gz | gunzip | grep LIS2DW12
+Board $>  cat /proc/config.gz | gunzip |  grep LSM6DS0
+Board $>  cat /proc/config.gz | gunzip |  grep LPS22HH
+Board $>  cat /proc/config.gz | gunzip |  grep STS751
+Board $>  cat /proc/config.gz | gunzip |  grep LIS2MDL
+```
 
+Returns nothing (or that the configuration is not set) which means that we need to patch the Linux kernel adding the missing sensor drivers
 
-------
-
-# Building and deploying the Linux kernel
+### 2.3 Patching the Linux kernel with the missing sensor drivers
 
 1. If not done yet, the SDK environment setup script must be run once to allow further cross-compilation
 
@@ -1152,13 +1160,15 @@ For that, add the following content into **stm32mp157a-dk1.dts** file:
 > PC $> for p in `ls -1 ../sensor_patches/*.patch`; do patch -p1 < $p; done
 > ```
 
-6. Create a directory where the kernel will be built
+### 2.4 Building and deploying the Linux kernel
+
+1. Create a directory where the kernel will be built
 
 > ```bash
 > PC $> mkdir -p ../build
 > ```
 
-7. Make and apply fragments
+2. Make and apply fragments
 
 > ```bash
 > PC $> make ARCH=arm O="$PWD/../build" multi_v7_defconfig fragment*.config
@@ -1166,7 +1176,7 @@ For that, add the following content into **stm32mp157a-dk1.dts** file:
 > PC $> yes '' | make ARCH=arm oldconfig O="$PWD/../build"
 > ```
 
-8. Compile kernel source code
+3. Compile kernel source code
 
 * Build kernel images (uImage and vmlinux) and device tree (dtbs)
 
