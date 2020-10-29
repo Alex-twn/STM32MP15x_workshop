@@ -1070,7 +1070,7 @@ This command will return **disabled** so we have to enable the I2C5 into STM32MP
 For that, add the following content into **stm32mp157a-dk1.dts** file:
 
 > ```
->  &i2c5 {
+> &i2c5 {
 > 	status = "okay";
 > 
 > 	hts221@5f {
@@ -1097,7 +1097,7 @@ For that, add the following content into **stm32mp157a-dk1.dts** file:
 > 		compatible = "st,lis2mdl";
 > 		reg = <0x1e>;
 > 	};
->  };
+> };
 > ```
 
 ### 2.2 Sensor configuration
