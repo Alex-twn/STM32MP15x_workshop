@@ -1060,45 +1060,45 @@ In addition, pins 5 and 6 of Arduino connector CN14 are used to manage LSM6DSL m
 
 The first thing to do is to verify if the I2C5 is active in the current Linux kernel we just flashed on STM32MP157A-DK1 board
 
-```bash
-board$ > cat /proc/device-tree/soc/i2c@40015000/status
-```
+> ```bash
+> board$ > cat /proc/device-tree/soc/i2c@40015000/status
+> ```
 
 This command will return **disabled** so we have to enable the I2C5 into STM32MP157A-DK1 device tree and few nodes must be added for each sensor to be supported
 
 
 For that, add the following content into **stm32mp157a-dk1.dts** file:
 
-```
- &i2c5 {
-	status = "okay";
-
-	hts221@5f {
-		compatible = "st,hts221";
-		reg = <0x5f>;
-	};
-	lis2dw12@19 {
-		compatible = "st,lis2dw12";
-		reg = <0x19>;
-	}
-	lsm6ds0@6b {
-		compatible = "st,lsm6ds0";
-		reg = <0x6b>;
-	};
-	lps22hh@5d {
-		compatible = "st,lps22hh";
-		reg = <0x5d>;
-	};	
-	stts751@4a {
-		compatible = "st,stts751";
-		reg = <0x4a>;
-	};
-	lis2mdl@1e {
-		compatible = "st,lis2mdl";
-		reg = <0x1e>;
-	};
- };
-```
+> ```
+>  &i2c5 {
+> 	status = "okay";
+> 
+> 	hts221@5f {
+> 		compatible = "st,hts221";
+> 		reg = <0x5f>;
+> 	};
+> 	lis2dw12@19 {
+> 		compatible = "st,lis2dw12";
+> 		reg = <0x19>;
+> 	}
+> 	lsm6ds0@6b {
+> 		compatible = "st,lsm6ds0";
+> 		reg = <0x6b>;
+> 	};
+> 	lps22hh@5d {
+> 		compatible = "st,lps22hh";
+> 		reg = <0x5d>;
+> 	};	
+> 	stts751@4a {
+> 		compatible = "st,stts751";
+> 		reg = <0x4a>;
+> 	};
+> 	lis2mdl@1e {
+> 		compatible = "st,lis2mdl";
+> 		reg = <0x1e>;
+> 	};
+>  };
+> ```
 
 ### 2.2 Sensor configuration
 
@@ -1106,24 +1106,24 @@ By default, only the HTS221 driver (temperature sensor) present on the X-NUCLEO-
 
 To check whether associated drivers are enabled inside the kernel, type the following commands
 
-```bash
-Board $>  cat /proc/config.gz | gunzip | grep HTS221
-CONFIG_HTS221=y
-CONFIG_HTS221_I2C=y
-CONFIG_HTS221_SPI=y
-```
+> ```bash
+> Board $>  cat /proc/config.gz | gunzip | grep HTS221
+> CONFIG_HTS221=y
+> CONFIG_HTS221_I2C=y
+> CONFIG_HTS221_SPI=y
+> ```
 
 Shows that HTS221 is enabled
 
 But the same commands for the other sensors
 
-```bash
-Board $>  cat /proc/config.gz | gunzip | grep LIS2DW12
-Board $>  cat /proc/config.gz | gunzip |  grep LSM6DS0
-Board $>  cat /proc/config.gz | gunzip |  grep LPS22HH
-Board $>  cat /proc/config.gz | gunzip |  grep STS751
-Board $>  cat /proc/config.gz | gunzip |  grep LIS2MDL
-```
+> ```bash
+> Board $>  cat /proc/config.gz | gunzip | grep LIS2DW12
+> Board $>  cat /proc/config.gz | gunzip |  grep LSM6DS0
+> Board $>  cat /proc/config.gz | gunzip |  grep LPS22HH
+> Board $>  cat /proc/config.gz | gunzip |  grep STS751
+> Board $>  cat /proc/config.gz | gunzip |  grep LIS2MDL
+> ```
 
 Returns nothing (or that the configuration is not set) which means that we need to patch the Linux kernel adding the missing sensor drivers
 
