@@ -1115,7 +1115,7 @@ For that, add the following content into **stm32mp157a-dk1.dts** file:
 
 ------
 
-# Building and deploying the Linux kernel for the first time
+# Building and deploying the Linux kernel
 
 1. If not done yet, the SDK environment setup script must be run once to allow further cross-compilation
 
