@@ -1081,7 +1081,7 @@ To edit **stm32mp157a-dk1.dts**, you can use an application like **nano**
 > 	lis2dw12@19 {
 > 		compatible = "st,lis2dw12";
 > 		reg = <0x19>;
-> 	}
+> 	};
 > 	lsm6ds0@6b {
 > 		compatible = "st,lsm6ds0";
 > 		reg = <0x6b>;
@@ -1189,14 +1189,11 @@ Returns nothing (or that the configuration is not set) which means that we need 
 - Highlight **accelerometer**, type **y** then enter **accelerometer**
 - Highlight **STMicroelectronics LIS2DW12 sensor** then type **y**
 - Do double esc to go  back to go back to **STM MEMs Device Drivers** menu
-- Highlight **humidity**, type **y** then enter **humidity**
-- Highlight **STM HTS221 sensor** then type **y**
-- Do double esc to go  back to go back to **STM MEMs Device Drivers** menu
 - Highlight **magnetometer**, type **y** then enter **magnetometer**
 - Highlight **STM LIS2MDL/IIS2MDC sensor** then type **y**
 - Do double esc to go  back to go back to **STM MEMs Device Drivers** menu
 
-### 2.4 Building and deploying the Linux kernel
+### 2.4 Building the Linux kernel & device tree
 
 1. Compile kernel source code
 
@@ -1221,3 +1218,73 @@ Returns nothing (or that the configuration is not set) which means that we need 
 > PC $> cp $PWD/../build/arch/arm/boot/dts/st*.dtb $PWD/../build/install_artifact/boot/
 > ```
 
+### 2.4 Deploying the Linux kernel & device tree
+
+There are several ways to program the generated binaries
+
+* Update can be done over via a network interface
+* Update can be done connecting the SDCard directly on the Linux host
+* Update can be done connecting the SDCard on STM32MP157A-DK1 board using U-Boot <= **we will use this method**
+
+#### 2.4.1 Enable USB mass storage mode in U-Boot
+
+You MUST configure first, via U-Boot, the board into USB mass storage doing the following
+
+1. Plug the SDCARD on Board
+
+2. Start the board and stop on U-boot shell
+	
+	> ```bash
+	> Hit any key to stop autoboot: 0
+	> STM32MP>
+	> ```
+	
+3. Plug an USB cable between the host PC and the STM32MP157A-DK1 board via USB OTG port (CN7)
+
+4. On U-Boot shell, call the USB mass storage functionality
+	
+	> ```bash
+	> STM32MP> ums 0 mmc 0
+	> ```
+
+At this point you should see 4 partitions mounted on your host PC in /media/$USER/
+
+* bootfs
+* rootfs
+* userfs
+* vendorfs
+
+#### 2.4.2 Copying the binaries on the bootfs
+
+1. First go to **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-20-06-24/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.31-r0/build/install_artifacts** directory
+
+   > ```bash
+   > PC $> cd $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-20-06-24/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.31-r0/build/install_artifacts
+   > ```
+
+2. Copy the Linux kernel and device tree to the mounted bootfs partition
+
+   ```bash
+   PC $> sudo cp -rf boot/* /media/$USER/bootfs/  
+   ```
+
+3. Umount properly the SDCard
+
+   ```bash
+   PC $> umount /media/$USER/bootfs
+   PC $> umount /media/$USER/rootfs
+   PC $> umount /media/$USER/userfs
+   PC $> umount /media/$USER/vendorfs
+   ```
+
+4. Then finally do a CRTL-C in the terminal handling U-Boot in mass storage to exit this mode and reset the board
+
+#### 2.4.3 Verify that the new Linux kernel and device tree can access to the sensors and read their data
+
+After the board has successfully booted, type the following command again
+
+```bash
+board$ > cat /proc/device-tree/soc/i2c@40015000/status
+```
+
+This time the command should return **okay**
