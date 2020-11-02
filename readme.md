@@ -1230,21 +1230,20 @@ There are several ways to program the generated binaries
 You MUST configure first, via U-Boot, the board into USB mass storage doing the following
 
 1. Plug the SDCARD on Board
-
 2. Start the board and stop on U-boot shell
-	
-	> ```bash
-	> Hit any key to stop autoboot: 0
-	> STM32MP>
-	> ```
-	
+
+> ```bash
+> Hit any key to stop autoboot: 0
+> STM32MP>
+> ```
+
 3. Plug an USB cable between the host PC and the STM32MP157A-DK1 board via USB OTG port (CN7)
 
 4. On U-Boot shell, call the USB mass storage functionality
-	
-	> ```bash
-	> STM32MP> ums 0 mmc 0
-	> ```
+
+> ```bash
+> STM32MP> ums 0 mmc 0
+> ```
 
 At this point you should see 4 partitions mounted on your host PC in /media/$USER/
 
@@ -1257,30 +1256,66 @@ At this point you should see 4 partitions mounted on your host PC in /media/$USE
 
 1. First go to **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-20-06-24/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.31-r0/build/install_artifacts** directory
 
-   > ```bash
-   > PC $> cd $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-20-06-24/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.31-r0/build/install_artifacts
-   > ```
+> ```bash
+> PC $> cd $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-20-06-24/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.31-r0/build/install_artifacts
+> ```
 
-2. Copy the Linux kernel and device tree to the mounted bootfs partition
+2. Copy the Linux kernel and device tree to the mounted **bootfs partition**
 
-   > ```bash
-   > PC $> sudo cp -rf boot/* /media/$USER/bootfs/  
-   > ```
+> ```bash
+> PC $> sudo cp -rf boot/* /media/$USER/bootfs/  
+> ```
 
-3. Umount properly the SDCard
+3. Remove the link on **install_artifact/lib/modules/5.4.31/**
 
-   > ```bash
-   > PC $> umount /media/$USER/bootfs
-   > PC $> umount /media/$USER/rootfs
-   > PC $> umount /media/$USER/userfs
-   > PC $> umount /media/$USER/vendorfs
-   > ```
+> ```bash
+> PC $> rm lib/modules/5.4.31/source lib/modules/5.4.31/build
+> ```
 
-4. Then finally do a CRTL-C in the terminal handling U-Boot in mass storage to exit this mode and reset the board
+4.  Optionally, strip kernel modules (to reduce the size of each kernel modules)
+
+> ```bash
+> PC $> find . -name "*.ko" | xargs $STRIP --strip-debug --remove-section=.comment --remove-section=.note --preserve-dates
+> ```
+
+5. Copy the kernel modules to the mounted **rootfs partition**
+
+> ```bash
+> PC $> sudo cp -r lib/modules/* /media/$USER/rootfs/lib/modules/
+> ```
+
+6. Unmount properly the SDCard
+
+> ```bash
+> PC $> umount /media/$USER/bootfs
+> PC $> umount /media/$USER/rootfs
+> PC $> umount /media/$USER/userfs
+> PC $> umount /media/$USER/vendorfs
+> ```
+
+7. Then finally do a CRTL-C in the terminal handling U-Boot in mass storage to exit this mode and reset the board
 
 #### 2.4.3 Verify that the new Linux kernel and device tree can access to the sensors and read their data
 
-After the board has successfully booted, type the following command again
+After the board has successfully booted don't forget to generate a list of module dependencies  (modules.dep) and a list of symbols provided by modules (modules.symbols)
+
+> ```bash
+> board $> depmod -a
+> ```
+
+Synchronize data on disk with memory
+
+> ```bash
+> board $> sync
+> ```
+
+Reboot the board in order to take update into account
+
+> ```bash
+> board $> reboot
+> ```
+
+After the board has successfully rebooted, type the following command again
 
 > ```bash
 > board$ > cat /proc/device-tree/soc/i2c@40015000/status
@@ -1297,5 +1332,8 @@ Then we need to enable the sensors in order to read the sensor data
 > board$ > echo 1 > /sys/devices/platform/soc/40015000.i2c/i2c-1/1-001e/input/input8/magn/enable
 > ```
 
-Reading from the sensors
+Reading from the sensors ....
 
+#### 2.4.4 Connecting the STM32MP157A-DK1 board to a Wi-Fi access point
+
+After the board has successfully booted don't forget to generate a list of module dependencies  (modules.dep) 
