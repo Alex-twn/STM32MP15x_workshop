@@ -1082,18 +1082,6 @@ To edit **stm32mp157a-dk1.dts**, you can use an application like **nano**
 > 		compatible = "st,lis2dw12";
 > 		reg = <0x19>;
 > 	};
-> 	lsm6ds0@6b {
-> 		compatible = "st,lsm6ds0";
-> 		reg = <0x6b>;
-> 	};
-> 	lps22hh@5d {
-> 		compatible = "st,lps22hh";
-> 		reg = <0x5d>;
-> 	};	
-> 	stts751@4a {
-> 		compatible = "st,stts751";
-> 		reg = <0x4a>;
-> 	};
 > 	lis2mdl@1e {
 > 		compatible = "st,lis2mdl";
 > 		reg = <0x1e>;
@@ -1120,9 +1108,6 @@ But the same commands for the other sensors
 
 > ```bash
 > Board $>  cat /proc/config.gz | gunzip | grep LIS2DW12
-> Board $>  cat /proc/config.gz | gunzip |  grep LSM6DS0
-> Board $>  cat /proc/config.gz | gunzip |  grep LPS22HH
-> Board $>  cat /proc/config.gz | gunzip |  grep STS751
 > Board $>  cat /proc/config.gz | gunzip |  grep LIS2MDL
 > ```
 
@@ -1181,17 +1166,31 @@ Returns nothing (or that the configuration is not set) which means that we need 
 > PC $> make ARCH=arm menuconfig O="$PWD/../build"
 > ```
 
-- Then go to **Device Drivers > Input device support > Miscellaneous devices**
+- Then go to **Device Drivers > Industrial I/O support > Humidity sensors**
+- Highlight **STMicroelectronics HTS221 sensor driver**, type **n**
+- Do double esc to go back to **Industrial I/O support** menu
+- Do double esc to go back to **Device Drivers** menu
+- Go to **Device Drivers > Input device support > Miscellaneous devices**
 - Highlight **STM MEMs Device Drivers (NEW)**, type **y** then enter **STM MEMs Device Drivers (NEW)**
-- Highlight **Inertial motion unit**, type **y** then enter **Inertial motion unit**
-- Highlight **STMicroelectronics LSM6DS0 sensor** then type **y**
-- Do double esc to go  back to go back to **STM MEMs Device Drivers** menu
 - Highlight **accelerometer**, type **y** then enter **accelerometer**
 - Highlight **STMicroelectronics LIS2DW12 sensor** then type **y**
-- Do double esc to go  back to go back to **STM MEMs Device Drivers** menu
+- Do double esc to go back to **STM MEMs Device Drivers** menu
+- Highlight **Humidity**, type **y** then enter **Humidity**
+- Highlight **STM HTS221 sensor (NEW)** then type **y**
+- Do double esc to go back to **STM MEMs Device Drivers** menu
 - Highlight **magnetometer**, type **y** then enter **magnetometer**
 - Highlight **STM LIS2MDL/IIS2MDC sensor** then type **y**
-- Do double esc to go  back to go back to **STM MEMs Device Drivers** menu
+
+9. In order to use the Wi-Fi dongle later on to connect the STM32MP157A-DK1 board to a network we need to enable the related driver
+
+- Do double esc to go back to **STM MEMs Device Drivers** menu
+- Do double esc to go back to **Miscellaneous devices** menu
+- Do double esc to go back to **Input device support** menu
+- Do double esc to go back to **Device Drivers** menu
+- Then go to **Network device support > Wireless LAN > Realtek rtlwifi family of devices**
+- Highlight **Realtek RTL8192CU/RTL8188CU USB Wireless Network Adapter** then type **m**
+
+- Do double esc many times to exit the **menuconfig** tool and choose **Yes** to save the new configuration
 
 ### 2.4 Building the Linux kernel & device tree
 
@@ -1264,18 +1263,18 @@ At this point you should see 4 partitions mounted on your host PC in /media/$USE
 
 2. Copy the Linux kernel and device tree to the mounted bootfs partition
 
-   ```bash
-   PC $> sudo cp -rf boot/* /media/$USER/bootfs/  
-   ```
+   > ```bash
+   > PC $> sudo cp -rf boot/* /media/$USER/bootfs/  
+   > ```
 
 3. Umount properly the SDCard
 
-   ```bash
-   PC $> umount /media/$USER/bootfs
-   PC $> umount /media/$USER/rootfs
-   PC $> umount /media/$USER/userfs
-   PC $> umount /media/$USER/vendorfs
-   ```
+   > ```bash
+   > PC $> umount /media/$USER/bootfs
+   > PC $> umount /media/$USER/rootfs
+   > PC $> umount /media/$USER/userfs
+   > PC $> umount /media/$USER/vendorfs
+   > ```
 
 4. Then finally do a CRTL-C in the terminal handling U-Boot in mass storage to exit this mode and reset the board
 
@@ -1283,8 +1282,20 @@ At this point you should see 4 partitions mounted on your host PC in /media/$USE
 
 After the board has successfully booted, type the following command again
 
-```bash
-board$ > cat /proc/device-tree/soc/i2c@40015000/status
-```
+> ```bash
+> board$ > cat /proc/device-tree/soc/i2c@40015000/status
+> ```
+>
 
 This time the command should return **okay**
+
+Then we need to enable the sensors in order to read the sensor data
+
+> ```bash
+> board$ > echo 1 > /sys/devices/platform/soc/40015000.i2c/i2c-1/1-005f/input/input2/device/enable_device
+> board$ > echo 1 > /sys/devices/platform/soc/40015000.i2c/i2c-1/1-0019/input/input3/accel/enable
+> board$ > echo 1 > /sys/devices/platform/soc/40015000.i2c/i2c-1/1-001e/input/input8/magn/enable
+> ```
+
+Reading from the sensors
+
