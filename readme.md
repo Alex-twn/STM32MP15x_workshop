@@ -1061,7 +1061,7 @@ In addition, pins 5 and 6 of Arduino connector CN14 are used to manage LSM6DSL m
 The first thing to do is to verify if the I2C5 is active in the current Linux kernel we just flashed on STM32MP157A-DK1 board
 
 > ```bash
-> board$ > cat /proc/device-tree/soc/i2c@40015000/status
+> Board $> cat /proc/device-tree/soc/i2c@40015000/status
 > ```
 
 This command will return **disabled** so we have to enable the I2C5 into STM32MP157A-DK1 device tree and few nodes must be added for each sensor to be supported
@@ -1096,7 +1096,7 @@ By default, only the HTS221 driver (temperature sensor) present on the X-NUCLEO-
 To check whether associated drivers are enabled inside the kernel, type the following commands
 
 > ```bash
-> Board $>  cat /proc/config.gz | gunzip | grep HTS221
+> Board $> cat /proc/config.gz | gunzip | grep HTS221
 > CONFIG_HTS221=y
 > CONFIG_HTS221_I2C=y
 > CONFIG_HTS221_SPI=y
@@ -1107,8 +1107,8 @@ Shows that HTS221 is enabled
 But the same commands for the other sensors
 
 > ```bash
-> Board $>  cat /proc/config.gz | gunzip | grep LIS2DW12
-> Board $>  cat /proc/config.gz | gunzip |  grep LIS2MDL
+> Board $> cat /proc/config.gz | gunzip | grep LIS2DW12
+> Board $> cat /proc/config.gz | gunzip |  grep LIS2MDL
 > ```
 
 Returns nothing (or that the configuration is not set) which means that we need to patch the Linux kernel adding the missing sensor drivers
@@ -1284,7 +1284,13 @@ At this point you should see 4 partitions mounted on your host PC in /media/$USE
 > PC $> sudo cp -r lib/modules/* /media/$USER/rootfs/lib/modules/
 > ```
 
-6. Unmount properly the SDCard
+6. Since we are here, let's take the opportunity to copy as well the Wi-Fi dongle driver binary (that will be needed later on) into the **rootfs partition**
+
+> ```bash
+> PC $> sudo cp -r rtlwifi/* /media/$USER/rootfs/lib/firmware/
+> ```
+
+8. Unmount properly the SDCard
 
 > ```bash
 > PC $> umount /media/$USER/bootfs
@@ -1293,7 +1299,7 @@ At this point you should see 4 partitions mounted on your host PC in /media/$USE
 > PC $> umount /media/$USER/vendorfs
 > ```
 
-7. Then finally do a CRTL-C in the terminal handling U-Boot in mass storage to exit this mode and reset the board
+9. Then finally do a CRTL-C in the terminal handling U-Boot in mass storage to exit this mode and reset the board
 
 #### 2.4.3 Verify that the new Linux kernel and device tree can access to the sensors and read their data
 
@@ -1318,7 +1324,7 @@ Reboot the board in order to take update into account
 After the board has successfully rebooted, type the following command again
 
 > ```bash
-> board$ > cat /proc/device-tree/soc/i2c@40015000/status
+> board $> cat /proc/device-tree/soc/i2c@40015000/status
 > ```
 >
 
@@ -1327,13 +1333,74 @@ This time the command should return **okay**
 Then we need to enable the sensors in order to read the sensor data
 
 > ```bash
-> board$ > echo 1 > /sys/devices/platform/soc/40015000.i2c/i2c-1/1-005f/input/input2/device/enable_device
-> board$ > echo 1 > /sys/devices/platform/soc/40015000.i2c/i2c-1/1-0019/input/input3/accel/enable
-> board$ > echo 1 > /sys/devices/platform/soc/40015000.i2c/i2c-1/1-001e/input/input8/magn/enable
+> board $> echo 1 > /sys/devices/platform/soc/40015000.i2c/i2c-1/1-005f/input/input2/device/enable_device
+> board $> echo 1 > /sys/devices/platform/soc/40015000.i2c/i2c-1/1-0019/input/input3/accel/enable
+> board $> echo 1 > /sys/devices/platform/soc/40015000.i2c/i2c-1/1-001e/input/input8/magn/enable
 > ```
 
-Reading from the sensors ....
+Reading from the sensors .... To be completed
 
 #### 2.4.4 Connecting the STM32MP157A-DK1 board to a Wi-Fi access point
 
-After the board has successfully booted don't forget to generate a list of module dependencies  (modules.dep) 
+The goal is to configure an wlan network interface via systemd-networkd configuration
+
+All the network configurations are stored on **/lib/systemd/network** or **/etc/systemd/network**
+
+Create the file dedicated to wireless interface **/lib/systemd/network/51-wireless.network**
+
+> ```bash
+> Board $> echo "[Match]" > /lib/systemd/network/51-wireless.network
+> Board $> echo "Name=wlan0" >> /lib/systemd/network/51-wireless.network
+> Board $> echo "[Network]" >> /lib/systemd/network/51-wireless.network
+> Board $> echo "DHCP=ipv4" >> /lib/systemd/network/51-wireless.network
+> ```
+
+Double check that the **51-wireless.network** file content is as follow
+
+> ```bash
+> Board $> cat /lib/systemd/network/51-wireless.network
+>  [Match]
+>  Name=wlan0
+>  [Network]
+>  DHCP=ipv4
+> ```
+
+In order to attach this wireless interface to a specific network, we need to have some information like the network SSID and password
+
+Type the following command in order to see the list of wireless network available
+
+> ```bash
+> Board $> ifconfig wlan0 up
+> Board $> iw dev wlan0 scan | grep SSID
+>        SSID: NETWORK1
+>        SSID: NETWORK2
+> ```
+
+Associate the wireless network to the wireless interface, here **wlan0**
+
+> ```bash
+> Board $> mkdir -p /etc/wpa_supplicant/
+>          echo "ctrl_interface=/var/run/wpa_supplicant" > /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
+>          echo "eapol_version=1" >> /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
+>          echo "ap_scan=1" >> /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
+>          echo "fast_reauth=1" >> /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
+>          echo "" >> /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
+>          wpa_passphrase SSID_OF_NETWORK PASSWORD_OF_NETWORK >> /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
+> ```
+
+Where **SSID_OF_NETWORK** **PASSWORD_OF_NETWORK** correspond to the SSID and password of wireless network
+
+Last, in order to enable and start the wireless configuration, type the following command
+
+> ```bash
+> Board $> systemctl enable wpa_supplicant@wlan0.service
+> Board $> systemctl restart systemd-networkd.service
+> Board $> systemctl restart wpa_supplicant@wlan0.service
+> ```
+
+Your board should be now connected to the network and internet, you can verify with the following command
+
+> ```bash
+> Board $> ping www.google.com
+> ```
+
