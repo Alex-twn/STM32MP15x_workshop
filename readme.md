@@ -282,7 +282,7 @@ The following checks allow to ensure that the environment is correctly setup
 
 # Install OpenSTLinux Developer Package on your host computer
 
-1. Download the latest [STM32MP1 OpenSTLinux Developer Package][Developer Package download link]] in **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package**
+1. Download the latest [STM32MP1 OpenSTLinux Developer Package][Developer Package download link] in **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package**
 
 [Developer Package download link]: https://www.st.com/content/st_com/en/products/embedded-software/mcu-mpu-embedded-software/stm32-embedded-software/stm32-mpu-openstlinux-distribution/stm32mp1dev.html
 
@@ -1263,7 +1263,7 @@ At this point you should see 4 partitions mounted on your host PC in /media/$USE
 2. Copy the Linux kernel and device tree to the mounted **bootfs partition**
 
 > ```bash
-> PC $> sudo cp -rf boot/* /media/$USER/bootfs/  
+> PC $> sudo cp -rf boot/* /media/$USER/bootfs/
 > ```
 
 3. Remove the link on **install_artifact/lib/modules/5.4.31/**
