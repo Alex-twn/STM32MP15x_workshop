@@ -174,7 +174,7 @@ The SDK for OpenSTLinux distribution provides a stand-alone cross-development to
 
 3. Download the latest [Developer Package SDK][SDK download link] in **$HOME/STM32MPU_workspace/tmp**
 
-[SDK download link]: https://www.st.com/en/embedded-software/stm32mp1dev.htm
+[SDK download link]: https://www.st.com/en/embedded-software/stm32mp1dev.html
 
 4. Go to **$HOME/STM32MPU_workspace/tmp** directory and decompress the tarball file to get the SDK installation script
 
