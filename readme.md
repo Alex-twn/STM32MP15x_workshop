@@ -284,7 +284,7 @@ The following checks allow to ensure that the environment is correctly setup
 
 1. Download the latest [STM32MP1 OpenSTLinux Developer Package][Developer Package download link] in **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package**
 
-[Developer Package download link]: https://www.st.com/content/st_com/en/products/embedded-software/mcu-mpu-embedded-software/stm32-embedded-software/stm32-mpu-openstlinux-distribution/stm32mp1dev.html
+[Developer Package download link]: https://www.st.com/en/embedded-software/stm32mp1dev.html
 
 * *This package includes the following pieces of software in source code*
   * *Linux® kernel*
