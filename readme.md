@@ -138,7 +138,7 @@
 
 2. Download the latest [STM32MP1 OpenSTLinux Starter Package][Starter Package download link] Starter Package in **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Starter-Package**
 
-   [Starter Package download link]: https://www.st.com/content/ccc/resource/technical/software/firmware/group0/6a/12/67/7d/22/19/43/d4/STM32MP15_OpenSTLinux_Starter_Package/files/FLASH-stm32mp1-openstlinux-5-4-dunfell-mp1-20-06-24.tar.xz/_jcr_content/translations/en.FLASH-stm32mp1-openstlinux-5-4-dunfell-mp1-20-06-24.tar.xz
+   [Starter Package download link]: https://www.st.com/en/embedded-software/stm32mp1starter.html
 
 3. Decompress the tarball file to get the binaries for the different partitions of the image and the Flash layout files
 
