@@ -1217,7 +1217,7 @@ Returns nothing (or that the configuration is not set) which means that we need 
 > PC $> cp $PWD/../build/arch/arm/boot/dts/st*.dtb $PWD/../build/install_artifact/boot/
 > ```
 
-### 2.4 Deploying the Linux kernel & device tree
+### 2.5 Deploying the Linux kernel & device tree
 
 There are several ways to program the generated binaries
 
@@ -1225,7 +1225,7 @@ There are several ways to program the generated binaries
 * Update can be done connecting the SDCard directly on the Linux host
 * Update can be done connecting the SDCard on STM32MP157A-DK1 board using U-Boot <= **we will use this method**
 
-#### 2.4.1 Enable USB mass storage mode in U-Boot
+#### 2.5.1 Enable USB mass storage mode in U-Boot
 
 You MUST configure first, via U-Boot, the board into USB mass storage doing the following
 
@@ -1252,7 +1252,7 @@ At this point you should see 4 partitions mounted on your host PC in /media/$USE
 * userfs
 * vendorfs
 
-#### 2.4.2 Copying the binaries on the bootfs
+#### 2.5.2 Copying the binaries on the bootfs
 
 1. First go to **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-20-06-24/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.31-r0/build/install_artifacts** directory
 
@@ -1301,7 +1301,7 @@ At this point you should see 4 partitions mounted on your host PC in /media/$USE
 
 9. Then finally do a CRTL-C in the terminal handling U-Boot in mass storage to exit this mode and reset the board
 
-#### 2.4.3 Verify that the new Linux kernel and device tree can access to the sensors and read their data
+#### 2.5.3 Verify that the new Linux kernel and device tree can access to the sensors and read their data
 
 After the board has successfully booted don't forget to generate a list of module dependencies  (modules.dep) and a list of symbols provided by modules (modules.symbols)
 
@@ -1340,7 +1340,7 @@ Then we need to enable the sensors in order to read the sensor data
 
 Reading from the sensors .... To be completed
 
-#### 2.4.4 Connecting the STM32MP157A-DK1 board to a Wi-Fi access point
+#### 2.5.4 Connecting the STM32MP157A-DK1 board to a Wi-Fi access point
 
 The goal is to configure an wlan network interface via systemd-networkd configuration
 
