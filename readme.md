@@ -17,7 +17,7 @@
 
 * *Should provide you the following terminal output if your internet connection is ok*
 
-![](/Pictures/2_Screenshot.png)
+![](Pictures/2_Screenshot.png)
 
 
 
@@ -347,7 +347,7 @@ The following checks allow to ensure that the environment is correctly setup
 
 ![](/Pictures/6_Screenshot.png)
 
-7. Select "Open File" tab and select the "FlashLayout_sdcard_stm32mp157a-dk1-trusted.tsv" file in **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.5.0/Starter-Package/stm32mp1-openstlinux-5.4-dunfell-mp1-20-06-24/images/stm32mp1/flashlayout_st-image-weston/trusted** installation folder
+7. Select "Open File" tab and select the **FlashLayout_sdcard_stm32mp157a-dk1-trusted.tsv** file in **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.5.0/Starter-Package/stm32mp1-openstlinux-5.4-dunfell-mp1-20-06-24/images/stm32mp1/flashlayout_st-image-weston/trusted** installation folder
 
 ![](/Pictures/7_Screenshot.jpg)
 
