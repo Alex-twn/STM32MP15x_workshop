@@ -430,6 +430,7 @@ The OpenSTLinux distribution installation directory is in the `$HOME/STM32MPU_wo
 ==> The OpenEmbedded environment setup script must be run once in each new working terminal in which you use the BitBake or devtool tools
 
 > ```bash
+> PC $> cd $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12
 > PC $> DISTRO=openstlinux-weston MACHINE=stm32mp1 source layers/meta-st/scripts/envsetup.sh
 > ```
 
@@ -463,10 +464,10 @@ The local configuration file (*build-openstlinuxweston-stm32mp1/conf/local.conf*
 1. Add the **meta-iotedge** layer and other dependencies yocto layers to the distribution configuration
 
 > ```bash
-> PC $> cd $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12
-> PC $> bitbake-layers add-layer $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/meta-rust/
-> PC $> bitbake-layers add-layer $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/meta-virtualization/
-> PC $> bitbake-layers add-layer $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/meta-iotedge/
+> PC $> cd $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12/build-openstlinuxweston-stm32mp1
+> PC $> bitbake-layers add-layer $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12/layers/meta-rust/
+> PC $> bitbake-layers add-layer $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12/layers/meta-virtualization/
+> PC $> bitbake-layers add-layer $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12/layers/meta-iotedge/
 > ```
 
 2. Update the configuration to add the new components in your image
