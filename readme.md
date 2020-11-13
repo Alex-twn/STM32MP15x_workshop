@@ -404,11 +404,11 @@ The OpenSTLinux distribution installation directory is in the **$HOME/STM32MPU_w
 
 > ```bash
 > PC $> cd  $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12/layers/
-> PC $> git clone -b thud https://github.com/Azure/meta-iotedge.git
+> PC $> git clone -b dunfell https://github.com/Azure/meta-iotedge.git
 > PC $> git clone git://github.com/meta-rust/meta-rust.git
-> PC $> git clone -b thud git://git.yoctoproject.org/meta-virtualization
+> PC $> git clone -b dunfell git://git.yoctoproject.org/meta-virtualization
 > PC $> cd meta-rust
-> PC $> git checkout c5ff05d1e99c1e80844c1673456e2368499918c7 -b INT_AZURE
+> PC $> git checkout e4d25b98083bcecb94df6ee189a165d63ede7f3d -b INT_AZURE
 > ```
 
 ### 7.1 Initializing the OpenEmbedded build environment
@@ -449,7 +449,7 @@ The local configuration file (*build-openstlinuxweston-stm32mp1/conf/local.conf*
 1. Add the **meta-iotedge** layer and other dependencies yocto layers to the distribution configuration
 
 > ```bash
-> PC $> cd $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package
+> PC $> cd $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12
 > PC $> bitbake-layers add-layer $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/meta-rust/
 > PC $> bitbake-layers add-layer $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/meta-virtualization/
 > PC $> bitbake-layers add-layer $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/meta-iotedge/
@@ -459,9 +459,9 @@ The local configuration file (*build-openstlinuxweston-stm32mp1/conf/local.conf*
 
    - Add **DISTRO_FEATURES_append** = "**virtualization**" in $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12/layers/meta-st/meta-st-openstlinux/conf/distro/**openstlinux-weston.conf**
 
-   - Add **IMAGE_INSTALL_append +**= "**iotedge-daemon iotedge-cli libiothsm-std docker connman connman-client**" in $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12/build-openstlinuxweston-stm32mp1/conf/**local.conf**
+   - Add **IMAGE_INSTALL_append +**= "**iotedge-cli libiothsm-std docker connman connman-client**" in $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12/build-openstlinuxweston-stm32mp1/conf/**local.conf**
    - Change **ROOTFS_PARTITION_SIZE** = "**763904**" to **ROOTFS_PARTITION_SIZE** = "**2097152**" in $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12/layers/meta-st/meta-st-stm32mp/conf/machine/include/**st-machine-common-stm32mp.inc** file
-   - Add **CONFIG_EXT4_FS_SECURITY**=y in $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12/layers/meta-st/meta-st-stm32mp\recipes-kernel/linux/linux-stm32mp/4.19/**fragment-03-systemd.config**
+   - Add **CONFIG_EXT4_FS_SECURITY**=y in $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12/layers/meta-st/meta-st-stm32mp/recipes-kernel/linux/linux-stm32mp/5.4/**fragment-03-systemd.config**
 
 3. Build the image
 
