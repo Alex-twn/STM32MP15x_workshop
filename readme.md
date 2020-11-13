@@ -10,18 +10,44 @@
 > PC $> mkdir $HOME/STM32MPU_workspace
 > PC $> cd $HOME/STM32MPU_workspace
 > ```
->
 
 2. Check host internet access
 
 > ```bash
 > PC $> wget -q www.google.com && echo "Internet access over HTTP/HTTPS is OK !" || echo "No internet access over HTTP/HTTPS ! You may need to set up a proxy."
 > ```
->
 
 * *Should provide you the following terminal output if your internet connection is ok*
 
 ![](Pictures/2_Screenshot.png)
+
+3. Allow internet over git://, ssh:// and others specifics protocols (mainly required for the Distribution Package)
+
+In addition to http/https protocols (used in 90% of the Internet traffic), some other protocols like git:// or ssh:// may be required
+
+For example in the context of the *Distribution Package*, some "git fetch" commands could require "git:// protocols"
+
+In order to support these protocols through a proxy, the best way is to directly setup the proxy in the $HOME/.gitconfig file (core.gitproxy) and use a tool like *corkscrew* in order to tunnel the git:// flow into the http flow
+
+> ```bash
+> PC $> sudo apt-get update
+> PC $> sudo apt-get install corkscrew
+> 
+> PC $> git config --replace-all --global core.gitproxy "$HOME/bin/git-proxy.sh"
+> PC $> git config --add --global core.gitproxy "none for <MyPrivateNetworkDomain>" (optionnal and for example .st.com, localhost, ...)
+> PC $> echo 'exec corkscrew <MyProxyServerUrl> <MyProxyPort> $* $HOME/.git-proxy.auth' > $HOME/bin/git-proxy.sh
+> PC $> chmod 700 $HOME/bin/git-proxy.sh
+> PC $> echo '<MyProxyLogin>:<MyProxyPassword>' > $HOME/.git-proxy.auth
+> PC $> chmod 600 $HOME/.git-proxy.auth
+> ```
+
+Here is a command to test this proxy settings:
+
+> ```bash
+> PC $> git ls-remote git://git.openembedded.org/openembedded-core > /dev/null && echo OK || echo KO
+> ```
+
+The command should return 'OK', else proxy settings are wrong
 
 
 
@@ -29,15 +55,14 @@
 
 ## 2. Install STM32CubeProgrammer on your host computer
 
-1. STM32CubeProgrammer requires version 1.8 of the Java platform
+1. Install Java platform version 1.8 required by STM32CubeProgrammer
 
 > ```bash
 > PC $> sudo apt-get install openjdk-8-jre-headless
 > PC $> sudo update-alternatives --config java
 > ```
->
 
-* *Select the java-8-openjdk configuration*
+​	==> Select the java-8-openjdk configuration
 
 2. Install OpenJFX for Ubuntu® 18.04
 
@@ -46,27 +71,24 @@
 > PC $> sudo apt install openjfx=8u161-b12-1ubuntu2 libopenjfx-jni=8u161-b12-1ubuntu2 libopenjfx-java=8u161-b12-1ubuntu2
 > PC $> sudo apt-mark hold openjfx libopenjfx-jni libopenjfx-java
 > ```
->
 
 3. Create your STM32MPU tools directory
 
 > ```bash
 > PC $> mkdir -p $HOME/STM32MPU_workspace/STM32MPU_tools/STM32CubeProgrammer-2.5.0
 > ```
-> 
 
 4. Create a temporary directory in your STM32MPU workspace
 
 > ```bash
 > PC $> mkdir $HOME/STM32MPU_workspace/tmp
 > ```
->
 
-5. Download the latest [STM32CubeProgrammer][STM32CubeProgrammer download link] in **$HOME/STM32MPU_workspace/tmp**
+5. Download the latest [STM32CubeProgrammer][STM32CubeProgrammer download link] in `$HOME/STM32MPU_workspace/tmp`
 
 [STM32CubeProgrammer download link]: https://www.st.com/en/development-tools/stm32cubeprog.html#getsoftware-scroll
 
-* *Note : if you have copied the STM32CubeProgrammer installation file from the USB dongle, please copy this installation file in **$HOME/STM32MPU_workspace/tmp***
+​	*Note: If you got the STM32CubeProgrammer installation file from the USB dongle, please copy this installation file in `$HOME/STM32MPU_workspace/tmp`
 
 6. Decompress the archive file to get the STM32CubeProgrammer installers
 
@@ -74,32 +96,28 @@
 > PC $> cd $HOME/STM32MPU_workspace/tmp
 > PC $> unzip en.stm32cubeprog_v2-5-0.zip
 > ```
->
 
 7. Execute the Linux installer which guides you through the installation process
 
 > ```bash
 > PC $> ./SetupSTM32CubeProgrammer-2.5.0.linux
 > ```
->
 
-- *Select **$HOME/STM32MPU_workspace/STM32MPU_tools/STM32CubeProgrammer-2.5.0** as the installation directory, when it's requested by the installer*
+​	==> Select $HOME/STM32MPU_workspace/STM32MPU_tools/STM32CubeProgrammer-2.5.0 as the installation directory
 
 8. Add the STM32CubeProgrammer binary path to your PATH environment variable (or .bashrc)
 
 > ```bash
 > PC $> export PATH=$HOME/STM32MPU_workspace/STM32MPU_tools/STM32CubeProgrammer-2.5.0/bin:$PATH
 > ```
->
 
 9. Check that the STM32CubeProgrammer tool is properly installed and accessible
 
 > ```bash
 > PC $> STM32_Programmer_CLI –h
 > ```
->
 
-* *Should provide you the following terminal output*
+​	==> Should provide you the following terminal output
 
 ![](Pictures/3_Screenshot.png)
 
@@ -114,15 +132,13 @@
 > ```bash
 > PC $> sudo apt-get install libusb-1.0-0
 > ```
->
 
-2. Then allow STM32CubeProgrammer to access to the USB port through low-level commands
+2. Allow STM32CubeProgrammer to access to the USB port through low-level commands
 
 > ```bash
 > PC $> cd $HOME/STM32MPU_workspace/STM32MPU_tools/STM32CubeProgrammer-2.5.0/Drivers/rules
 > PC $> sudo cp *.* /etc/udev/rules.d/
 > ```
->
 
 
 
@@ -130,7 +146,7 @@
 
 ## 4. Install OpenSTLinux Starter Package on your host computer
 
-#### This step is mainly required to program your board with a bootable system and especially a valid file system
+#### *This step is mainly required to program your board with a bootable system and especially a valid file system*
 
 1. Create your STM32MP15x Starter Package directory
 
@@ -138,18 +154,16 @@
 > PC $> mkdir -p $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Starter-Package
 > PC $> cd $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Starter-Package
 > ```
-> 
 
-2. Download the latest [STM32MP1 OpenSTLinux Starter Package][Starter Package download link] Starter Package in **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Starter-Package**
+2. Download the latest [STM32MP1 OpenSTLinux Starter Package][Starter Package download link] in `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Starter-Package`
 
    [Starter Package download link]: https://www.st.com/en/embedded-software/stm32mp1starter.html
 
-3. Decompress the tarball file to get the binaries for the different partitions of the image and the Flash layout files
+3. Decompress the tarball file to get the binaries for the different partitions of the image and the flash layout files
 
 > ```bash
 > PC $> tar xvf en.FLASH-stm32mp1-openstlinux-5-4-dunfell-mp1-20-11-12.tar.xz
 > ```
->
 
 
 
@@ -159,7 +173,7 @@
 
 ### 5.1 SDK installation
 
-#### This step is required to be able to build Linux kernel, device tree, modules, ... for STM32MP1 platform
+#### *This step is required to be able to build Linux kernel, device tree, modules, ... for STM32MP1 platform*
 
 The SDK for OpenSTLinux distribution provides a stand-alone cross-development toolchain and libraries tailored to the contents of the specific image flashed in the board
 
@@ -174,18 +188,18 @@ The SDK for OpenSTLinux distribution provides a stand-alone cross-development to
 > PC $> curl http://storage.googleapis.com/git-repo-downloads/repo > $HOME/bin/repo
 > ```
 
-2. By default, on Linux system, a maximum of 8 partitions are allowed on mmc. All Packages (Starter Package, ...) need more than 10 partitions for the storage device. In order to extend the number of partitions per device to 16, the following options must be added to modprobe
+2. By default, on Linux system, a maximum of 8 partitions are allowed on mmc. All STM32MP1 packages need more than 10 partitions for the storage device. In order to extend the number of partitions per device to 16, the following options must be added to modprobe
 
 > ```bash
 > PC $> echo 'options mmc_block perdev_minors=16' > /tmp/mmc_block.conf
 > PC $> sudo mv /tmp/mmc_block.conf /etc/modprobe.d/mmc_block.conf
 > ```
 
-3. Download the latest [Developer Package SDK][SDK download link] in **$HOME/STM32MPU_workspace/tmp**
+3. Download the latest [Developer Package SDK][SDK download link] in `$HOME/STM32MPU_workspace/tmp`
 
 [SDK download link]: https://www.st.com/en/embedded-software/stm32mp1dev.html
 
-4. Go to **$HOME/STM32MPU_workspace/tmp** directory and decompress the tarball file to get the SDK installation script
+4. Go to `$HOME/STM32MPU_workspace/tmp` directory and decompress the tarball file to get the SDK installation script
 
 > ```bash
 > PC $> cd $HOME/STM32MPU_workspace/tmp
@@ -210,7 +224,7 @@ The SDK for OpenSTLinux distribution provides a stand-alone cross-development to
 > PC $> ./stm32mp1-openstlinux-5-4-dunfell-mp1-20-11-12/sdk/st-image-weston-openstlinux-weston-stm32mp1-x86_64-toolchain-3.1-openstlinux-5-4-dunfell-mp1-20-11-12.sh -d $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/SDK
 > ```
 
-* *A successful installation outputs the following log*
+​	==> A successful installation outputs the following log
 
 > ```bash
 > ST OpenSTLinux - Weston - (A Yocto Project Based Distro) SDK installer version 3.1-openstlinux-5-4-dunfell-mp1-20-11-12
@@ -220,35 +234,35 @@ The SDK for OpenSTLinux distribution provides a stand-alone cross-development to
 > Setting it up...done
 > SDK has been successfully set up and is ready to be used.
 > Each time you wish to use the SDK in a new shell session, you need to source the environment setup script e.g.
->  $ . $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/SDK/environment-setup-cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
+> $ . $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/SDK/environment-setup-cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
 > ```
 
 ### 5.2 Verification that the SDK is working well
 
-The SDK environment setup script must be run once in each new working terminal in which you cross-compile
+1. The SDK environment setup script must be run once in each new working terminal in which you want to cross-compile
 
 > ```bash
 > PC $> cd $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/SDK
 > PC $> source environment-setup-cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
 > ```
 
-The following checks allow to ensure that the environment is correctly setup
+2. The following checks allow to ensure that the environment is correctly setup
 
-1. Check the target architecture
+* Check the target architecture
 
 > ```bash
 > PC $> echo $ARCH
 > arm
 > ```
 
-2. Check the toolchain binary prefix for the target tools
+* Check the toolchain binary prefix for the target tools
 
 > ```bash
 > PC $> echo $CROSS_COMPILE
 > arm-ostl-linux-gnueabi-
 > ```
 
-3. Check the C compiler version
+* Check the C compiler version
 
 > ```bash
 > PC $> $CC --version
@@ -258,16 +272,16 @@ The following checks allow to ensure that the environment is correctly setup
 > warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 > ```
 
-4. Check that the SDK version is the expected one
+* Check that the SDK version is the expected one
 
 > ```bash
 > PC $> echo $OECORE_SDK_VERSION
 > 3.1-openstlinux-5-4-dunfell-mp1-20-11-12
 > ```
 
-* *If any of these commands fails or does not return the expected result, please try to reinstall the SDK*
+​	==> If any of these commands fails or does not return the expected result, please try to reinstall the SDK
 
-* *The SDK is in the **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/SDK** directory*
+​	==> The SDK is in the `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/SDK` directory
 
 > ```text
 > <SDK installation directory>                                      SDK for OpenSTLinux distribution: details in Standard SDK directory structure article
@@ -287,9 +301,9 @@ The following checks allow to ensure that the environment is correctly setup
 
 ## 6. Install OpenSTLinux Developer Package on your host computer
 
-#### This step is required to download the all the source code needed to build up the system
+#### *This step is required to download the all the source code needed to build up the system*
 
-1. Download the latest [STM32MP1 OpenSTLinux Developer Package][Developer Package download link] in **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package**
+1. Download the latest [STM32MP1 OpenSTLinux Developer Package][Developer Package download link] in `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package`
 
 [Developer Package download link]: https://www.st.com/en/embedded-software/stm32mp1dev.html
 
@@ -299,13 +313,13 @@ The following checks allow to ensure that the environment is correctly setup
   * *Trusted firmware-A (TF-A)*
   * *An optional open source trusted execution environment (OP-TEE)*
 
-2. Go to **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package** directory
+2. Go to `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package` directory
 
 > ```bash
 > PC $> cd $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package
 > ```
 
-3. Decompress the tarball file to get the Linux kernel (Linux kernel source code, ST patches, ST configuration fragments...)
+3. Decompress the tarball file to get the Linux kernel (Linux kernel source code, ST patches, ST configuration fragments, ...)
 
 > ```bash
 > PC $> tar xvf en.SOURCES-stm32mp1-openstlinux-5-4-dunfell-mp1-20-11-12.tar.xz
@@ -314,7 +328,7 @@ The following checks allow to ensure that the environment is correctly setup
 > PC $> cd linux-5.4.56 
 > ```
 
-- *The **Linux kernel installation directory** is in the **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-20-06-24/sources/arm-ostl-linux-gnueabi** directory, and is named **linux-stm32mp-5.4.31-r0***
+​	==> The *Linux kernel installation directory* is in the `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-20-06-24/sources/arm-ostl-linux-gnueabi` directory, and is named *linux-stm32mp-5.4.56-r0*
 
 > ```text
 > linux-stm32mp-5.4.56-r0     Linux kernel installation directory
@@ -332,9 +346,9 @@ The following checks allow to ensure that the environment is correctly setup
 
 ## 7. Install OpenSTLinux Distribution Package on your host computer
 
-#### This step is required to create a starter package including Microsoft Azure IoTedge
+#### *This step is required to create a starter package including Microsoft® Azure IoTedge*
 
-The STM32MP1 OpenSTLinux distribution is delivered through a manifest repository location and a manifest revision (**openstlinux-5.4-dunfell-mp1-20-11-12**)
+The STM32MP1 OpenSTLinux distribution is delivered through a manifest repository location and a manifest revision (*openstlinux-5.4-dunfell-mp1-20-11-12*)
 
 1. Create your STM32MP15x Distribution Package directory & sub-directory
 
@@ -342,13 +356,13 @@ The STM32MP1 OpenSTLinux distribution is delivered through a manifest repository
 > PC $> mkdir -p $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12
 > ```
 
-2. Go to **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12** directory
+2. Go to `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12` directory
 
 > ```bash
 > PC $> cd $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12
 > ```
 
-3. The installation relies on the *repo* command. First initialize repo in the current directory
+3. The installation relies on the repo command. First initialize repo in the current directory
 
 > ```bash
 > PC $> repo init -u https://github.com/STMicroelectronics/oe-manifest.git -b refs/tags/openstlinux-5.4-dunfell-mp1-20-11-12
@@ -360,9 +374,9 @@ The STM32MP1 OpenSTLinux distribution is delivered through a manifest repository
 > PC $> repo sync
 > ```
 
-**Note:** *Distribution package* needs around 140MB to be installed (and around 25GB once *distribution package* is compiled)
+​	==> Note: Distribution package needs around 140MB to be installed (and around 25GB once distribution package is compiled)
 
-The OpenSTLinux distribution installation directory is in the **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package** and is named openstlinux-5.4-dunfell-mp1-20-11-12
+The OpenSTLinux distribution installation directory is in the `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package` directory and is named openstlinux-5.4-dunfell-mp1-20-11-12
 
 > ```
 > openstlinux-5.4-dunfell-mp1-20-11-12  OpenSTLinux distribution
@@ -400,7 +414,7 @@ The OpenSTLinux distribution installation directory is in the **$HOME/STM32MPU_w
 > │    └── openembedded-core                Core metadata for current versions of OpenEmbedded (standard)
 > ```
 
-5. Get **meta-iotedge** [[3\]](https://wiki.st.com/stm32mpu-ecosystem-v1/wiki/How_to_integrate_Azure_IoT_Edge_on_OpenSTLinux#cite_note-3) and the dependencies
+5. Get meta-iotedge and the dependencies
 
 > ```bash
 > PC $> cd  $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12/layers/
@@ -413,23 +427,23 @@ The OpenSTLinux distribution installation directory is in the **$HOME/STM32MPU_w
 
 ### 7.1 Initializing the OpenEmbedded build environment
 
-***Note: The OpenEmbedded environment setup script must be run once in each new working terminal in which you use the BitBake or devtool tools***
+==> The OpenEmbedded environment setup script must be run once in each new working terminal in which you use the BitBake or devtool tools
 
 > ```bash
 > PC $> DISTRO=openstlinux-weston MACHINE=stm32mp1 source layers/meta-st/scripts/envsetup.sh
 > ```
 
-The BSP for STM32MP1 depends on packages and firmware which are covered by a **[software license agreement (SLA)](https://wiki.st.com/stm32mpu/wiki/OpenSTLinux_licenses#Top_Software_license_agreement_.28SLA.29_and_third-party_licences)**. You will be asked to read and to accept this EULA.
+The BSP for STM32MP1 depends on packages and firmware which are covered by a **[software license agreement (SLA)](https://wiki.st.com/stm32mpu/wiki/OpenSTLinux_licenses#Top_Software_license_agreement_.28SLA.29_and_third-party_licences)**. You will be asked to read and to accept this EULA
 
 Note that:
 
 - *openstlinux-weston* (OpenSTLinux distribution featuring Weston/Wayland) and *stm32mp1* (machine configuration for all STM32MP1 hardware configurations) are the **default** values for *DISTRO* and *MACHINE*
 - The software packages for the Starter Package (image) and for the Developer Package (SDK...) have been built with this configuration
-- Other values for *DISTRO* and *MACHINE* are proposed in [OpenSTLinux distribution](https://wiki.st.com/stm32mpu/wiki/OpenSTLinux_distribution)
+- Other values for *DISTRO* and *MACHINE* are proposed in OpenSTLinux distribution
 
-Among other things, the environment setup script creates the **build directory** named **build-openstlinuxweston-stm32mp1**. After the script runs, the current working directory is set to this build directory. Later, when the build completes, it contains all the files created during the build.
+Among other things, the environment setup script creates the **build directory** named **build-openstlinuxweston-stm32mp1**. After the script runs, the current working directory is set to this build directory. When the build completes, it contains all the files created during the build
 
-The local configuration file (*build-openstlinuxweston-stm32mp1/conf/local.conf*) contains all local user settings. The layers configuration file (*build-openstlinuxweston-stm32mp1/conf/bblayers.conf*) tells BitBake what layers must be considered during the build.
+The local configuration file (*build-openstlinuxweston-stm32mp1/conf/local.conf*) contains all local user settings. The layers configuration file (*build-openstlinuxweston-stm32mp1/conf/bblayers.conf*) tells BitBake which layers must be considered during the build
 
 > ```
 > openstlinux-5.4-dunfell-mp1-20-11-12	OpenSTLinux distribution
@@ -444,7 +458,7 @@ The local configuration file (*build-openstlinuxweston-stm32mp1/conf/local.conf*
 > │   ├── [...]
 > ```
 
-### 7.2 Include Microsoft Azure IoT Edge
+### 7.2 Include Microsoft® Azure IoT Edge
 
 1. Add the **meta-iotedge** layer and other dependencies yocto layers to the distribution configuration
 
@@ -457,19 +471,19 @@ The local configuration file (*build-openstlinuxweston-stm32mp1/conf/local.conf*
 
 2. Update the configuration to add the new components in your image
 
-   - Add **DISTRO_FEATURES_append** = "**virtualization**" in $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12/layers/meta-st/meta-st-openstlinux/conf/distro/**openstlinux-weston.conf**
+   - Add `DISTRO_FEATURES_append = "virtualization"` in `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12/layers/meta-st/meta-st-openstlinux/conf/distro/openstlinux-weston.conf` file
 
-   - Add **IMAGE_INSTALL_append +**= "**iotedge-cli libiothsm-std docker connman connman-client**" in $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12/build-openstlinuxweston-stm32mp1/conf/**local.conf**
-   - Change **ROOTFS_PARTITION_SIZE** = "**763904**" to **ROOTFS_PARTITION_SIZE** = "**2097152**" in $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12/layers/meta-st/meta-st-stm32mp/conf/machine/include/**st-machine-common-stm32mp.inc** file
-   - Add **CONFIG_EXT4_FS_SECURITY**=y in $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12/layers/meta-st/meta-st-stm32mp/recipes-kernel/linux/linux-stm32mp/5.4/**fragment-03-systemd.config**
+   - Add `IMAGE_INSTALL_append += "iotedge-cli libiothsm-std docker connman connman-client"` in `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12/build-openstlinuxweston-stm32mp1/conf/local.conf` file
+   - Change `ROOTFS_PARTITION_SIZE = "763904"` to `ROOTFS_PARTITION_SIZE = "2097152"` in `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12/layers/meta-st/meta-st-stm32mp/conf/machine/include/st-machine-common-stm32mp.inc` file
+   - Add `CONFIG_EXT4_FS_SECURITY=y` in `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12/layers/meta-st/meta-st-stm32mp/recipes-kernel/linux/linux-stm32mp/5.4/fragment-03-systemd.config` file
 
 3. Build the image
 
-   To build the image, execute the following command in the folder $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12/build-openstlinuxweston-stm32mp1 Execute the command:
+   To build the image, execute the following command in the folder `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12/build-openstlinuxweston-stm32mp1`
 
-```bash
-PC $> bitbake st-image-weston
-```
+> ```bash
+> PC $> bitbake st-image-weston
+> ```
 
 
 
@@ -489,11 +503,10 @@ PC $> bitbake st-image-weston
 > ```bash
 > PC $> STM32CubeProgrammer
 > ```
->
 
 ![](Pictures/4_Screenshot.png)
 
-6. On the right, select USB (not STLINK, set by default) in the connection picklist and click on "Refresh" button. Serial Number is displayed if USB is detected. Click on "Connect"
+6. On the right, select USB (not STLINK, set by default) in the connection picklist and click on *Refresh* button. Serial Number is displayed if USB is detected. Click on *Connect*
 
 ![](Pictures/5_Screenshot.png)
 
@@ -501,19 +514,19 @@ PC $> bitbake st-image-weston
 
 ​		If you cannot connect to the board, you must restart the STM32CubeProgrammer application with root privilege
 
-​		Go to  **$HOME/STM32MPU_workspace/STM32MPU_tools/STM32CubeProgrammer-2.5.0/bin**  and type **sudo ./STM32CubeProgrammer**
+​		Go to  `$HOME/STM32MPU_workspace/STM32MPU_tools/STM32CubeProgrammer-2.5.0/bin`  and type `sudo ./STM32CubeProgrammer`
 
-7. Select "Open File" tab and select the **FlashLayout_sdcard_stm32mp157a-dk1-trusted.tsv** file in **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.5.0/Starter-Package/stm32mp1-openstlinux-5.4-dunfell-mp1-20-06-24/images/stm32mp1/flashlayout_st-image-weston/trusted** installation folder
+7. Select *Open File* tab and select the **FlashLayout_sdcard_stm32mp157a-dk1-trusted.tsv** file in `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.5.0/Starter-Package/stm32mp1-openstlinux-5.4-dunfell-mp1-20-06-24/images/stm32mp1/flashlayout_st-image-weston/trusted` installation folder
 
 ![](Pictures/7_Screenshot.jpg)
 
 ![](Pictures/8_Screenshot.jpg)
 
-8. Fill the "Binaries Path" by browsing up to folder **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.5.0/Starter-Package/stm32mp1-openstlinux-5.4-dunfell-mp1-20-06-24/images/stm32mp1**
+8. Fill the *Binaries Path* by browsing up to folder `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.5.0/Starter-Package/stm32mp1-openstlinux-5.4-dunfell-mp1-20-06-24/images/stm32mp1`
 
 ![](Pictures/9_Screenshot.png)
 
-9. Click on "Download" to start the flashing process
+9. Click on *Download* to start the flashing process
 
 ![](Pictures/10_Screenshot.png)
 
@@ -1481,7 +1494,6 @@ After the board has successfully rebooted, type the following command again
 > ```bash
 > board $> cat /proc/device-tree/soc/i2c@40015000/status
 > ```
->
 
 This time the command should return **okay**
 
@@ -1543,10 +1555,10 @@ Double check that the **51-wireless.network** file content is as follow
 
 > ```bash
 > Board $> cat /lib/systemd/network/51-wireless.network
->  [Match]
->  Name=wlan0
->  [Network]
->  DHCP=ipv4
+> [Match]
+> Name=wlan0
+> [Network]
+> DHCP=ipv4
 > ```
 
 In order to attach this wireless interface to a specific network, we need to have some information like the network SSID and password
@@ -1556,20 +1568,20 @@ Type the following command in order to see the list of wireless network availabl
 > ```bash
 > Board $> ifconfig wlan0 up
 > Board $> iw dev wlan0 scan | grep SSID
->        SSID: NETWORK1
->        SSID: NETWORK2
+>     SSID: NETWORK1
+>     SSID: NETWORK2
 > ```
 
 Associate the wireless network to the wireless interface, here **wlan0**
 
 > ```bash
 > Board $> mkdir -p /etc/wpa_supplicant/
->          echo "ctrl_interface=/var/run/wpa_supplicant" > /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
->          echo "eapol_version=1" >> /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
->          echo "ap_scan=1" >> /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
->          echo "fast_reauth=1" >> /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
->          echo "" >> /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
->          wpa_passphrase SSID_OF_NETWORK PASSWORD_OF_NETWORK >> /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
+>       echo "ctrl_interface=/var/run/wpa_supplicant" > /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
+>       echo "eapol_version=1" >> /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
+>       echo "ap_scan=1" >> /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
+>       echo "fast_reauth=1" >> /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
+>       echo "" >> /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
+>       wpa_passphrase SSID_OF_NETWORK PASSWORD_OF_NETWORK >> /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
 > ```
 
 Where **SSID_OF_NETWORK** **PASSWORD_OF_NETWORK** correspond to the SSID and password of wireless network
