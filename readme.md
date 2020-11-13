@@ -17,7 +17,7 @@
 > PC $> wget -q www.google.com && echo "Internet access over HTTP/HTTPS is OK !" || echo "No internet access over HTTP/HTTPS ! You may need to set up a proxy."
 > ```
 
-* *Should provide you the following terminal output if your internet connection is ok*
+​	==> Should provide you the following terminal output if your internet connection is ok
 
 ![](Pictures/2_Screenshot.png)
 
