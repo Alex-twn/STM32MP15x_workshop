@@ -319,7 +319,7 @@ The SDK for OpenSTLinux distribution provides a stand-alone cross-development to
 
 ------
 
-# Create and program a full package including Microsoft® Azure IoT Edge
+# Create and program a complete package including Microsoft® Azure IoT Edge services
 
 ## 1. Using OpenSTLinux Distribution Package
 
