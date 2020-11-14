@@ -1428,10 +1428,10 @@ At this point you should see 4 partitions mounted on your host PC in /media/$USE
 
 #### 2.5.2 Copying the binaries on the bootfs
 
-1. First go to `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-20-06-24/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.31-r0/build/install_artifacts` directory
+1. First go to `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-20-06-24/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.56-r0/build/install_artifacts` directory
 
 > ```bash
-> PC $> cd $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-20-06-24/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.31-r0/build/install_artifacts
+> PC $> cd $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-20-06-24/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.56-r0/build/install_artifacts
 > ```
 
 2. Copy the Linux kernel and device tree to the mounted *bootfs* partition
@@ -1440,10 +1440,10 @@ At this point you should see 4 partitions mounted on your host PC in /media/$USE
 > PC $> sudo cp -rf boot/* /media/$USER/bootfs/
 > ```
 
-3. Remove the link on *install_artifact/lib/modules/5.4.31/*
+3. Remove the link on *install_artifact/lib/modules/5.4.56/*
 
 > ```bash
-> PC $> rm lib/modules/5.4.31/source lib/modules/5.4.31/build
+> PC $> rm lib/modules/5.4.56/source lib/modules/5.4.56/build
 > ```
 
 4.  Optionally, strip kernel modules (to reduce the size of each kernel modules)
