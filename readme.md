@@ -144,34 +144,9 @@
 
 ------
 
-## 4. Install OpenSTLinux Starter Package on your host computer (not needed will be removed)
+## 4. Install OpenSTLinux Developer Package SDK on your host computer
 
-#### *This step is mainly required to program your board with a bootable system and especially a valid file system*
-
-1. Create your STM32MP15x Starter Package directory
-
-> ```bash
-> PC $> mkdir -p $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Starter-Package
-> PC $> cd $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Starter-Package
-> ```
-
-2. Download the latest [STM32MP1 OpenSTLinux Starter Package][Starter Package download link] in `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Starter-Package`
-
-   [Starter Package download link]: https://www.st.com/en/embedded-software/stm32mp1starter.html
-
-3. Decompress the tarball file to get the binaries for the different partitions of the image and the flash layout files
-
-> ```bash
-> PC $> tar xvf en.FLASH-stm32mp1-openstlinux-5-4-dunfell-mp1-20-11-12.tar.xz
-> ```
-
-
-
-------
-
-## 5. Install OpenSTLinux Developer Package SDK on your host computer
-
-### 5.1 SDK installation
+### 4.1 SDK installation
 
 #### *This step is required to be able to build Linux kernel, device tree, modules, ... for STM32MP1 platform*
 
@@ -237,7 +212,7 @@ The SDK for OpenSTLinux distribution provides a stand-alone cross-development to
 > $ . $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/SDK/environment-setup-cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
 > ```
 
-### 5.2 Verification that the SDK is working well
+### 4.2 Verification that the SDK is working well
 
 1. The SDK environment setup script must be run once in each new working terminal in which you want to cross-compile
 
@@ -299,7 +274,7 @@ The SDK for OpenSTLinux distribution provides a stand-alone cross-development to
 
 ------
 
-## 6. Install OpenSTLinux Developer Package on your host computer
+## 5. Install OpenSTLinux Developer Package on your host computer
 
 #### *This step is required to download the all the source code needed to build up the system*
 
@@ -344,9 +319,9 @@ The SDK for OpenSTLinux distribution provides a stand-alone cross-development to
 
 ------
 
-## 7. Install OpenSTLinux Distribution Package on your host computer
+# Create and program a full package including Microsoft® Azure IoT Edge
 
-#### *This step is required to create a starter package including Microsoft® Azure IoTedge*
+## 1. Using OpenSTLinux Distribution Package
 
 The STM32MP1 OpenSTLinux distribution is delivered through a manifest repository location and a manifest revision (*openstlinux-5.4-dunfell-mp1-20-11-12*)
 
@@ -425,7 +400,7 @@ The OpenSTLinux distribution installation directory is in the `$HOME/STM32MPU_wo
 > PC $> git checkout e4d25b98083bcecb94df6ee189a165d63ede7f3d -b INT_AZURE
 > ```
 
-### 7.1 Initializing the OpenEmbedded build environment
+### 1.1 Initializing the OpenEmbedded build environment
 
 ==> The OpenEmbedded environment setup script must be run once in each new working terminal in which you use the BitBake or devtool tools
 
@@ -459,7 +434,7 @@ The local configuration file (*build-openstlinuxweston-stm32mp1/conf/local.conf*
 > │   ├── [...]
 > ```
 
-### 7.2 Include Microsoft® Azure IoT Edge
+### 1.2 Include Microsoft® Azure IoT Edge
 
 1. Add the meta-iotedge layer and other dependencies yocto layers to the distribution configuration
 
@@ -490,7 +465,7 @@ The local configuration file (*build-openstlinuxweston-stm32mp1/conf/local.conf*
 
 ------
 
-## 8. Program the SDCard for STM32MP157A-DK1 board
+## 2. Program the SDCard with the built package
 
 1. Set the boot switches (located at the back of the board) to the off position
 
@@ -513,11 +488,7 @@ The local configuration file (*build-openstlinuxweston-stm32mp1/conf/local.conf*
 
 ![](Pictures/6_Screenshot.png)
 
-​		<!--If you cannot connect to the board, you must restart the STM32CubeProgrammer application with root privilege-->
-
-​		<!--Go to  `$HOME/STM32MPU_workspace/STM32MPU_tools/STM32CubeProgrammer-2.5.0/bin`  and type `sudo ./STM32CubeProgrammer`-->
-
-7. Select *Open File* tab and select the **FlashLayout_sdcard_stm32mp157a-dk1-trusted.tsv** file in `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.5.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12/build-openstlinuxweston-stm32mp1/tmp-glibc/deploy/images/stm32mp1/flashlayout_st-image-weston/trusted` installation folder
+7. Select *Open File* tab and select the *FlashLayout_sdcard_stm32mp157a-dk1-trusted.tsv* file in `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.5.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12/build-openstlinuxweston-stm32mp1/tmp-glibc/deploy/images/stm32mp1/flashlayout_st-image-weston/trusted` installation folder
 
 ![](Pictures/7_Screenshot.jpg)
 
@@ -547,7 +518,7 @@ The local configuration file (*build-openstlinuxweston-stm32mp1/conf/local.conf*
 
 ------
 
-## 9. Install a serial terminal on your host computer
+## 3. Install a serial terminal on your host computer
 
 The serial terminal allows to communicate with the board trough a UART serial interface
 
@@ -1169,7 +1140,7 @@ The serial terminal allows to communicate with the board trough a UART serial in
 
 ------
 
-# Build and deploy the Linux kernel for this workshop
+# Modify and deploy the images to add sensing and wireless connectivity
 
 This chapter will explain how to build the Linux kernel in order to make the STM32MP157A-DK1 board able to communicate with the X-NUCLEO-IKS01A3 sensor shield
 
