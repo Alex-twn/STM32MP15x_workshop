@@ -1461,7 +1461,7 @@ At this point you should see 4 partitions mounted on your host PC in /media/$USE
 6. Since we are here, let's take the opportunity to copy as well the Wi-Fi dongle driver binary as well as the python script allowing to read the sensor data (that will be needed later on) into the *rootfs* partition
 
 > ```bash
-> PC $> sudo cp rtlwifi/rtl8192cufw_TMSC.bin /media/$USER/rootfs/lib/firmware/
+> PC $> sudo cp -r rtlwifi/* /media/$USER/rootfs/lib/firmware/
 > PC $> sudo cp read_sensors.py /media/$USER/rootfs/home/root
 > ```
 
