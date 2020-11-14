@@ -21,13 +21,13 @@
 
 ![](Pictures/2_Screenshot.png)
 
-3. Allow internet over git://, ssh:// and others specifics protocols (mainly required for the Distribution Package)
+3. Allow internet over git://, ssh:// and others specifics protocols (skip this part if no proxy is used to access internet)
 
-In addition to http/https protocols (used in 90% of the Internet traffic), some other protocols like git:// or ssh:// may be required
+   In addition to http/https protocols (used in 90% of the Internet traffic), some other protocols like git:// or ssh:// may be required
 
-For example in the context of the *Distribution Package*, some "git fetch" commands could require "git:// protocols"
+   For example in the context of the *Distribution Package*, some "git fetch" commands could require "git:// protocols"
 
-In order to support these protocols through a proxy, the best way is to directly setup the proxy in the $HOME/.gitconfig file (core.gitproxy) and use a tool like *corkscrew* in order to tunnel the git:// flow into the http flow
+   In order to support these protocols through a proxy, the best way is to directly setup the proxy in the $HOME/.gitconfig file (core.gitproxy) and use a tool like *corkscrew* in order to tunnel the git:// flow into the http flow
 
 > ```bash
 > PC $> sudo apt-get update
@@ -41,13 +41,13 @@ In order to support these protocols through a proxy, the best way is to directly
 > PC $> chmod 600 $HOME/.git-proxy.auth
 > ```
 
-Here is a command to test this proxy settings:
+​	Here is a command to test this proxy settings:
 
 > ```bash
 > PC $> git ls-remote git://git.openembedded.org/openembedded-core > /dev/null && echo OK || echo KO
 > ```
 
-The command should return 'OK', else proxy settings are wrong
+​	==> This command should return *OK* else the proxy settings are wrong
 
 
 
