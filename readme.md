@@ -144,7 +144,7 @@
 
 ------
 
-## 4. Install OpenSTLinux Starter Package on your host computer (not needed will be suppressed)
+## 4. Install OpenSTLinux Starter Package on your host computer (not needed will be removed)
 
 #### *This step is mainly required to program your board with a bootable system and especially a valid file system*
 
@@ -515,7 +515,7 @@ The local configuration file (*build-openstlinuxweston-stm32mp1/conf/local.conf*
 
 ​		<!--If you cannot connect to the board, you must restart the STM32CubeProgrammer application with root privilege-->
 
-​		<!--Go to  `$HOME/STM32MPU_workspace/STM32MPU_tools/STM32CubeProgrammer-2.5.0/bin`  and type `sudo ./STM32CubeProgrammer-->`
+​		<!--Go to  `$HOME/STM32MPU_workspace/STM32MPU_tools/STM32CubeProgrammer-2.5.0/bin`  and type `sudo ./STM32CubeProgrammer`-->
 
 7. Select *Open File* tab and select the **FlashLayout_sdcard_stm32mp157a-dk1-trusted.tsv** file in `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.5.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12/build-openstlinuxweston-stm32mp1/tmp-glibc/deploy/images/stm32mp1/flashlayout_st-image-weston/trusted` installation folder
 
