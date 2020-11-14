@@ -1401,7 +1401,7 @@ There are several ways to program the generated binaries
 
 #### 2.5.1 Enable USB mass storage mode in U-Boot
 
-You MUST configure first, via U-Boot, the board into USB mass storage doing the following
+You must configure first, via U-Boot, the board into USB mass storage doing the following
 
 1. Plug the SDCARD on Board
 2. Start the board and stop on U-boot shell
@@ -1428,19 +1428,19 @@ At this point you should see 4 partitions mounted on your host PC in /media/$USE
 
 #### 2.5.2 Copying the binaries on the bootfs
 
-1. First go to **$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-20-06-24/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.31-r0/build/install_artifacts** directory
+1. First go to `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-20-06-24/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.31-r0/build/install_artifacts` directory
 
 > ```bash
 > PC $> cd $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-20-06-24/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.31-r0/build/install_artifacts
 > ```
 
-2. Copy the Linux kernel and device tree to the mounted **bootfs partition**
+2. Copy the Linux kernel and device tree to the mounted *bootfs* partition
 
 > ```bash
 > PC $> sudo cp -rf boot/* /media/$USER/bootfs/
 > ```
 
-3. Remove the link on **install_artifact/lib/modules/5.4.31/**
+3. Remove the link on *install_artifact/lib/modules/5.4.31/*
 
 > ```bash
 > PC $> rm lib/modules/5.4.31/source lib/modules/5.4.31/build
@@ -1452,13 +1452,13 @@ At this point you should see 4 partitions mounted on your host PC in /media/$USE
 > PC $> find . -name "*.ko" | xargs $STRIP --strip-debug --remove-section=.comment --remove-section=.note --preserve-dates
 > ```
 
-5. Copy the kernel modules to the mounted **rootfs partition**
+5. Copy the kernel modules to the mounted *rootfs* partition
 
 > ```bash
 > PC $> sudo cp -r lib/modules/* /media/$USER/rootfs/lib/modules/
 > ```
 
-6. Since we are here, let's take the opportunity to copy as well the Wi-Fi dongle driver binary as well as the python script allowing to read the sensor data (that will be needed later on) into the **rootfs partition**
+6. Since we are here, let's take the opportunity to copy as well the Wi-Fi dongle driver binary as well as the python script allowing to read the sensor data (that will be needed later on) into the *rootfs* partition
 
 > ```bash
 > PC $> sudo cp -r rtlwifi/* /media/$USER/rootfs/lib/firmware/
@@ -1502,7 +1502,7 @@ After the board has successfully rebooted, type the following command again
 > board $> cat /proc/device-tree/soc/i2c@40015000/status
 > ```
 
-This time the command should return **okay**
+This time the command should return *okay*
 
 During boot you should see the following sensors being probed
 
@@ -1547,9 +1547,9 @@ And from the pressure sensor using the following command
 
 The goal is to configure an wlan network interface via systemd-networkd configuration
 
-All the network configurations are stored on **/lib/systemd/network** or **/etc/systemd/network**
+All the network configurations are stored on */lib/systemd/network* or */etc/systemd/network*
 
-Create the file dedicated to wireless interface **/lib/systemd/network/51-wireless.network**
+Create the file dedicated to wireless interface */lib/systemd/network/51-wireless.network*
 
 > ```bash
 > Board $> echo "[Match]" > /lib/systemd/network/51-wireless.network
@@ -1558,7 +1558,7 @@ Create the file dedicated to wireless interface **/lib/systemd/network/51-wirele
 > Board $> echo "DHCP=ipv4" >> /lib/systemd/network/51-wireless.network
 > ```
 
-Double check that the **51-wireless.network** file content is as follow
+Double check that the *51-wireless.network* file content is as follow
 
 > ```bash
 > Board $> cat /lib/systemd/network/51-wireless.network
@@ -1579,7 +1579,7 @@ Type the following command in order to see the list of wireless network availabl
 >     SSID: NETWORK2
 > ```
 
-Associate the wireless network to the wireless interface, here **wlan0**
+Associate the wireless network to the wireless interface, here *wlan0*
 
 > ```bash
 > Board $> mkdir -p /etc/wpa_supplicant/
@@ -1591,7 +1591,7 @@ Associate the wireless network to the wireless interface, here **wlan0**
 >       wpa_passphrase SSID_OF_NETWORK PASSWORD_OF_NETWORK >> /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
 > ```
 
-Where **SSID_OF_NETWORK** **PASSWORD_OF_NETWORK** correspond to the SSID and password of wireless network
+Where *SSID_OF_NETWORK* *PASSWORD_OF_NETWORK* correspond to the SSID and password of wireless network
 
 Last, in order to enable and start the wireless configuration, type the following command
 
