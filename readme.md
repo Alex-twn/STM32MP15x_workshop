@@ -449,7 +449,7 @@ The local configuration file (*build-openstlinuxweston-stm32mp1/conf/local.conf*
 
    - Add `DISTRO_FEATURES_append = "virtualization"` in `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12/layers/meta-st/meta-st-openstlinux/conf/distro/openstlinux-weston.conf` file
 
-   - Add `IMAGE_INSTALL_append += "iotedge-cli libiothsm-std docker connman connman-client"` in `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12/build-openstlinuxweston-stm32mp1/conf/local.conf` file
+   - Add `IMAGE_INSTALL_append += "iotedge-daemon iotedge-cli libiothsm-std docker connman connman-client"` in `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12/build-openstlinuxweston-stm32mp1/conf/local.conf` file
    - Change `ROOTFS_PARTITION_SIZE = "763904"` to `ROOTFS_PARTITION_SIZE = "2097152"` in `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12/layers/meta-st/meta-st-stm32mp/conf/machine/include/st-machine-common-stm32mp.inc` file
    - Add `CONFIG_EXT4_FS_SECURITY=y` in `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12/layers/meta-st/meta-st-stm32mp/recipes-kernel/linux/linux-stm32mp/5.4/fragment-03-systemd.config` file
 
