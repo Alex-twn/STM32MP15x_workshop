@@ -456,6 +456,8 @@ The local configuration file (*build-openstlinuxweston-stm32mp1/conf/local.conf*
 3. Build the image
 
    To build the image, execute the following command in the folder `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12/build-openstlinuxweston-stm32mp1`
+   
+   **This operation is taking a lot of time, between 4 to 6 hours so we will not execute it, rather we will provide the output build that has been created in a USB flash drive or online repository**
 
 > ```bash
 > PC $> bitbake st-image-weston
@@ -467,50 +469,48 @@ The local configuration file (*build-openstlinuxweston-stm32mp1/conf/local.conf*
 
 ## 2. Program the SDCard with the built package
 
-1. Set the boot switches (located at the back of the board) to the off position
+The previous build is provided in a USB flash drive in the *distribution-package* folder and is called *distribution-package_images.zip*
+
+1. Copy the *distribution-package_images.zip* file in `$HOME/STM32MPU_workspace/tmp`
+
+> ```bash
+> PC $> cp <path_to_USB_flash_drive>/distribution-package/distribution-package_images.zip $HOME/STM32MPU_workspace/tmp
+> ```
+
+2. Move to `$HOME/STM32MPU_workspace/tmp` and unzip the *distribution-package_images.zip* file
+
+> ```bash
+> PC $> cd $HOME/STM32MPU_workspace/tmp
+> PC $> unzip distribution-package_images.zip
+> ```
+
+3. Move to `$HOME/STM32MPU_workspace/tmp/distribution-package_images/stm32mp1`
+
+> ```bash
+> PC $> cd distribution-package_images/stm32mp1
+> ```
+
+4. Set the boot switches (located at the back of the board) to the off position
 
 ![](Pictures/STM32MP157C-DK2_jumper_flash.jpg)
 
-2. Connect an USB Type A to Type C cable between your PC and CN7 (USB) connector (SDCard programming port)
-3. Connect an USB Type A to Type C cable between your PC and CN6 (PWR_IN) connector (board power supply)
-4. Press the reset button to reset the board
-5. Launch STM32CubeProgrammer to get the GUI
+5. Connect an USB Type A to Type C cable between your PC and CN7 (USB) connector (SDCard programming port)
+
+6. Connect an USB Type A to Type C cable between your PC and CN6 (PWR_IN) connector (board power supply)
+
+7. Press the reset button to reset the board
+
+8. Use STM32CubeProgrammer in command line interface mode to program the board SDCard
 
 > ```bash
-> PC $> STM32CubeProgrammer
+> PC $> STM32_Programmer_CLI -c port=usb1 -w flashlayout_st-image-weston/trusted/FlashLayout_sdcard_stm32mp157a-dk1-trusted.tsv
 > ```
 
-![](Pictures/4_Screenshot.png)
+9. Disconnect the USB Type A to Type C cable between your PC and CN7 (USB) connector (SDCard programming port)
 
-6. On the right, select USB (not STLINK, set by default) in the connection picklist and click on *Refresh* button. Serial Number is displayed if USB is detected. Click on *Connect*
+10. Disconnect the USB Type A to Type C cable between your PC and CN6 (PWR_IN) connector (board power supply)
 
-![](Pictures/5_Screenshot.png)
-
-![](Pictures/6_Screenshot.png)
-
-7. Select *Open File* tab and select the *FlashLayout_sdcard_stm32mp157a-dk1-trusted.tsv* file in `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.5.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12/build-openstlinuxweston-stm32mp1/tmp-glibc/deploy/images/stm32mp1/flashlayout_st-image-weston/trusted` installation folder
-
-![](Pictures/7_Screenshot.jpg)
-
-![](Pictures/8_Screenshot.jpg)
-
-8. Fill the *Binaries Path* by browsing up to folder `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.5.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12/build-openstlinuxweston-stm32mp1/tmp-glibc/deploy/images/stm32mp1`
-
-![](Pictures/9_Screenshot.png)
-
-9. Click on *Download* to start the flashing process
-
-![](Pictures/10_Screenshot.png)
-
-10. Progress is displayed with progress bar till completion popup message
-
-![](Pictures/11_Screenshot.png)
-
-![](Pictures/12_Screenshot.png)
-
-11. Disconnect the USB Type A to Type C cable between your PC and CN7 (USB) connector (SDCard programming port)
-12. Disconnect the USB Type A to Type C cable between your PC and CN6 (PWR_IN) connector (board power supply)
-13. Set the boot switches (located at the back of the board) to the ON position
+11. Set the boot switches (located at the back of the board) to the ON position
 
 ![](Pictures/STM32MP157C-DK2_jumper_boot.jpg)
 
