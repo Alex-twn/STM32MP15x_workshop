@@ -204,7 +204,7 @@ The SDK for OpenSTLinux distribution provides a stand-alone cross-development to
 > ```bash
 > ST OpenSTLinux - Weston - (A Yocto Project Based Distro) SDK installer version 3.1-openstlinux-5-4-dunfell-mp1-20-11-12
 > =======================================================================================================================
-> You are about to install the SDK to "/home/osboxes/MCD/V2.0/Developper-Package/SDK". Proceed [Y/n]? Y
+> You are about to install the SDK to "$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/SDK". Proceed [Y/n]? Y
 > Extracting SDK................................................................................................................................................................................................................done
 > Setting it up...done
 > SDK has been successfully set up and is ready to be used.
