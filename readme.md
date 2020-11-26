@@ -114,7 +114,7 @@
 9. Check that the STM32CubeProgrammer tool is properly installed and accessible
 
 > ```bash
-> PC $> STM32_Programmer_CLI –h
+> PC $> STM32_Programmer_CLI --h
 > ```
 
 ​	==> Should provide you the following terminal output
@@ -494,13 +494,41 @@ The previous build is provided in a USB flash drive in the *distribution-package
 
 ![](Pictures/STM32MP157C-DK2_jumper_flash.jpg)
 
-5. Connect an USB Type A to Type C cable between your PC and CN7 (USB) connector (SDCard programming port)
-
+5. Connect an USB Type A to Type C cable between your PC and CN7 (USB) connector (SD Card programming port)
 6. Connect an USB Type A to Type C cable between your PC and CN6 (PWR_IN) connector (board power supply)
-
 7. Press the reset button to reset the board
+8. Use STM32CubeProgrammer in command line interface mode to program the board SD Card
 
-8. Use STM32CubeProgrammer in command line interface mode to program the board SDCard
+- Check the USB port where the board is connected
+
+> ```bash
+> PC $> STM32_Programmer_CLI -l
+> ```
+
+==> Will return something like this *USB1* is the port to be used
+
+> ```bash
+> =====  DFU Interface   =====
+> 
+> Total number of available STM32 device in DFU mode: 1
+> 
+>   Device Index           : USB1
+>   USB Bus Number         : 001
+>   USB Address Number     : 002
+>   Product ID             : DFU in HS Mode @Device ID /0x500, @Revision ID /0x0000
+>   Serial number          : 003A00293338510739303435
+>   Firmware version       : 0x0110
+>   Device ID              : 0x0500
+> 
+> ===== STLink Interface =====
+> Error: No ST-Link detected!
+> 
+> =====  UART Interface  =====
+> 
+> Total number of serial ports available: 0
+> ```
+
+- Program the SD Card with all the images
 
 > ```bash
 > PC $> STM32_Programmer_CLI -c port=usb1 -w flashlayout_st-image-weston/trusted/FlashLayout_sdcard_stm32mp157a-dk1-trusted.tsv
@@ -1212,7 +1240,7 @@ For that, we must modify the *stm32mp157a-dk1.dts* file located in `$HOME/STM32M
 To edit *stm32mp157a-dk1.dts*, you can use an application like *nano* or *vi*
 
 > ```bash
-> Board $> nano $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-5-4-dunfell-mp1-20-11-12/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.56-r0/linux-5.4.56/arch/arm/boot/dts/stm32mp157a-dk1.dts
+> PC $> nano $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-5-4-dunfell-mp1-20-11-12/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.56-r0/linux-5.4.56/arch/arm/boot/dts/stm32mp157a-dk1.dts
 > ```
 
 And modify as below
@@ -1499,19 +1527,19 @@ Then we need to enable the sensors in order to read the sensor data
 Finally we can read from the accelerometer sensor using the following command
 
 > ```bash
-> board $> python read_sensor.py -d acc
+> board $> python3 read_sensor.py -d acc
 > ```
 
 From the magnetometer sensor using the following command
 
 > ```bash
-> board $> python read_sensor.py -d mag
+> board $> python3 read_sensor.py -d mag
 > ```
 
 And from the pressure sensor using the following command
 
 > ```bash
-> board $> python read_sensor.py -d hum
+> board $> python3 read_sensor.py -d hum
 > ```
 
 #### 2.5.4 Connecting the STM32MP157A-DK1 board to a Wi-Fi access point
