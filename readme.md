@@ -505,7 +505,7 @@ The previous build is provided in a USB flash drive in the *distribution-package
 > PC $> STM32_Programmer_CLI -l
 > ```
 
-==> Will return something like this *USB1* is the port to be used
+==> Will return something like this (*USB1* is the port to be used)
 
 > ```bash
 > =====  DFU Interface   =====
