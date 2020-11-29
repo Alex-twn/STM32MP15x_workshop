@@ -1447,10 +1447,10 @@ At this point you should see 4 partitions mounted on your host PC in /media/$USE
 
 #### 2.5.2 Copying the binaries on the bootfs
 
-1. First go to `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-20-06-24/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.56-r0/build/install_artifact` directory
+1. First go to `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-20-11-12/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.56-r0/build/install_artifact` directory
 
 > ```bash
-> PC $> cd $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-20-06-24/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.56-r0/build/install_artifact
+> PC $> cd $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-20-11-12/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.56-r0/build/install_artifact
 > ```
 
 *Note: This folder is provided in the USB flash drive inside the 8.Install_artifact folder*
