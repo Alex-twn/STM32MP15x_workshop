@@ -1387,7 +1387,7 @@ Returns nothing (or that the configuration is not set) which means that we need 
 
 ### 2.4 Building the Linux kernel & device tree
 
-*Note: This operation is taking quite some time, between 30min to 1hour so we will not execute it, rather we will provide the output images that have been created in a USB flash drive and are inside the 8.Install_artifacts folder*
+*Note: This operation is taking quite some time, between 30min to 1hour so we will not execute it, rather we will provide the output images that have been created in a USB flash drive and are inside the 8.Install_artifact folder*
 
 1. Build kernel images (uImage and vmlinux) and device tree (dtbs)
 
@@ -1447,13 +1447,13 @@ At this point you should see 4 partitions mounted on your host PC in /media/$USE
 
 #### 2.5.2 Copying the binaries on the bootfs
 
-1. First go to `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-20-06-24/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.56-r0/build/install_artifacts` directory
+1. First go to `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-20-06-24/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.56-r0/build/install_artifact` directory
 
 > ```bash
-> PC $> cd $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-20-06-24/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.56-r0/build/install_artifacts
+> PC $> cd $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-20-06-24/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.56-r0/build/install_artifact
 > ```
 
-*Note: This folder is provided in the USB flash drive inside the 8.Install_artifacts folder*
+*Note: This folder is provided in the USB flash drive inside the 8.Install_artifact folder*
 
 2. Copy the Linux kernel and device tree to the mounted *bootfs* partition
 
