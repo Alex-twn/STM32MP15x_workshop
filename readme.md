@@ -21,7 +21,7 @@
 
 ![](Pictures/2_Screenshot.png)
 
-3. Allow internet over git://, ssh:// and others specifics protocols (skip this part if no proxy is used to access internet)
+3. Allow internet over git://, ssh:// and others specifics protocols *(skip this part if no proxy is used to access internet)*
 
    In addition to http/https protocols (used in 90% of the Internet traffic), some other protocols like git:// or ssh:// may be required
 
@@ -88,7 +88,7 @@
 
 [STM32CubeProgrammer download link]: https://www.st.com/en/development-tools/stm32cubeprog.html#getsoftware-scroll
 
-​	*Note: If you got the STM32CubeProgrammer installation file from the USB dongle, please copy this installation file in `$HOME/STM32MPU_workspace/tmp`
+*Note: If you cannot download the installation file, you can find it as well in the provided USB flash drive inside the folder 1.STM32CubeProgrammer_installation, please copy this installation file in `$HOME/STM32MPU_workspace/tmp`*
 
 6. Decompress the archive file to get the STM32CubeProgrammer installers
 
@@ -173,6 +173,8 @@ The SDK for OpenSTLinux distribution provides a stand-alone cross-development to
 3. Download the latest [Developer Package SDK][SDK download link] in `$HOME/STM32MPU_workspace/tmp`
 
 [SDK download link]: https://www.st.com/en/embedded-software/stm32mp1dev.html
+
+*Note: If you cannot download the installation file, you can find it as well in the provided USB flash drive inside the folder 2.Developer_package_SDK_installation, please copy this installation file in `$HOME/STM32MPU_workspace/tmp`*
 
 4. Go to `$HOME/STM32MPU_workspace/tmp` directory and decompress the tarball file to get the SDK installation script
 
@@ -282,6 +284,8 @@ The SDK for OpenSTLinux distribution provides a stand-alone cross-development to
 
 [Developer Package download link]: https://www.st.com/en/embedded-software/stm32mp1dev.html
 
+*Note: If you cannot download the installation file, you can find it as well in the provided USB flash drive inside the folder 3.Developer_package_installation, please copy this installation file in `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package`*
+
 * *This package includes the following pieces of software in source code*
   * *Linux® kernel*
   * *U-Boot*
@@ -319,7 +323,7 @@ The SDK for OpenSTLinux distribution provides a stand-alone cross-development to
 
 ------
 
-# Create and program a complete package including Microsoft® Azure IoT Edge services
+# Build a package including Microsoft® Azure IoT Edge services
 
 ## 1. Using OpenSTLinux Distribution Package
 
@@ -456,8 +460,8 @@ The local configuration file (*build-openstlinuxweston-stm32mp1/conf/local.conf*
 3. Build the image
 
    To build the image, execute the following command in the folder `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Distribution-Package/openstlinux-5.4-dunfell-mp1-20-11-12/build-openstlinuxweston-stm32mp1`
-   
-   **This operation is taking a lot of time, between 4 to 6 hours so we will not execute it, rather we will provide the output build that has been created in a USB flash drive or online repository**
+
+*Note: This operation is taking a lot of time, between 4 to 6hours so we will not execute it, rather we will provide the output images that have been created in a USB flash drive and are inside the folder 4.OpenSTLinux_IoTEdge*
 
 > ```bash
 > PC $> bitbake st-image-weston
@@ -467,27 +471,27 @@ The local configuration file (*build-openstlinuxweston-stm32mp1/conf/local.conf*
 
 ------
 
-## 2. Program the SDCard with the built package
+## 2. Flash the SD Card with the built package
 
-The previous build is provided in a USB flash drive in the *distribution-package* folder and is called *distribution-package_images.zip*
+The previous build is provided in a USB flash drive in the *4.OpenSTLinux_IoTEdge* folder and is called *stm32mp1.zip*
 
-1. Copy the *distribution-package_images.zip* file in `$HOME/STM32MPU_workspace/tmp`
+1. Copy the *stm32mp1.zip* file in `$HOME/STM32MPU_workspace/tmp`
 
 > ```bash
-> PC $> cp <path_to_USB_flash_drive>/distribution-package/distribution-package_images.zip $HOME/STM32MPU_workspace/tmp
+> PC $> cp <path_to_USB_flash_drive>/4.OpenSTLinux_IoTEdge/stm32mp1.zip $HOME/STM32MPU_workspace/tmp
 > ```
 
-2. Move to `$HOME/STM32MPU_workspace/tmp` and unzip the *distribution-package_images.zip* file
+2. Move to `$HOME/STM32MPU_workspace/tmp` and unzip the *stm32mp1.zip* file
 
 > ```bash
 > PC $> cd $HOME/STM32MPU_workspace/tmp
-> PC $> unzip distribution-package_images.zip
+> PC $> unzip stm32mp1.zip
 > ```
 
-3. Move to `$HOME/STM32MPU_workspace/tmp/distribution-package_images/stm32mp1`
+3. Move to `$HOME/STM32MPU_workspace/tmp/stm32mp1`
 
 > ```bash
-> PC $> cd distribution-package_images/stm32mp1
+> PC $> cd stm32mp1
 > ```
 
 4. Set the boot switches (located at the back of the board) to the off position
@@ -1237,7 +1241,7 @@ This command will return **disabled** so we have to enable the I2C5 into STM32MP
 
 For that, we must modify the *stm32mp157a-dk1.dts* file located in `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-5-4-dunfell-mp1-20-11-12/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.56-r0/linux-5.4.56/arch/arm/boot/dts` directory
 
-To edit *stm32mp157a-dk1.dts*, you can use an application like *nano* or *vi*
+To edit *stm32mp157a-dk1.dts*, you can use an application like *nano*
 
 > ```bash
 > PC $> nano $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-5-4-dunfell-mp1-20-11-12/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.56-r0/linux-5.4.56/arch/arm/boot/dts/stm32mp157a-dk1.dts
@@ -1288,7 +1292,7 @@ But the same commands for the other sensors
 
 Returns nothing (or that the configuration is not set) which means that we need to patch the Linux kernel adding the missing sensor drivers
 
-### 2.3 Patching the Linux kernel with the missing sensor drivers and enabling the sensors
+### 2.3 Patching the Linux kernel with the missing sensor / Wi-Fi drivers and enabling the sensors
 
 1. If not done yet, the SDK environment setup script must be run once to allow further cross-compilation
 
@@ -1296,38 +1300,52 @@ Returns nothing (or that the configuration is not set) which means that we need 
 > PC $> source $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/SDK/environment-setup-cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
 > ```
 
-2. Copy the folder *sensor_patches* in `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-5-4-dunfell-mp1-20-11-12/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.56-r0` directory
+2. Copy the *sensor_patches* folder in `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-5-4-dunfell-mp1-20-11-12/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.56-r0` directory
+
+*Note: This folder is provided in the USB flash drive inside the 5.Sensor_patches folder*
 
 > ```bash
 > PC $> cp -R sensor_patches $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-5-4-dunfell-mp1-20-11-12/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.56-r0
 > ```
 
-3. Copy the folder *st* in `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-5-4-dunfell-mp1-20-11-12/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.56-r0/linux-5.4.56/drivers/input/misc` directory
+3. Copy the *st* folder in `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-5-4-dunfell-mp1-20-11-12/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.56-r0/linux-5.4.56/drivers/input/misc` directory
+
+*Note: This folder is provided in the USB flash drive inside the 6.Sensor_drivers folder*
 
 > ```bash
 > PC $> cp -R st $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-5-4-dunfell-mp1-20-11-12/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.56-r0/linux-5.4.56/drivers/input/misc
 > ```
 
-4. Go to `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-5-4-dunfell-mp1-20-11-12/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.56-r0/linux-5.4.56` directory
+4. Copy the *rtl8188eu* folder, the *Kconfig* and *Makefile* files in `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-5-4-dunfell-mp1-20-11-12/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.56-r0/linux-5.4.56/drivers/net/wireless/realtek/rtlwifi` directory
+
+*Note: This folder and files are provided in the USB flash drive inside the 7.Wifi_driver folder*
+
+> ```bash
+> PC $> cp -R rtl8188eu $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-5-4-dunfell-mp1-20-11-12/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.56-r0/linux-5.4.56/drivers/net/wireless/realtek/rtlwifi
+> PC $> cp Kconfig $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-5-4-dunfell-mp1-20-11-12/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.56-r0/linux-5.4.56/drivers/net/wireless/realtek/rtlwifi
+> PC $> cp Makefile $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-5-4-dunfell-mp1-20-11-12/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.56-r0/linux-5.4.56/drivers/net/wireless/realtek/rtlwifi
+> ```
+
+5. Go to `$HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-5-4-dunfell-mp1-20-11-12/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.56-r0/linux-5.4.56` directory
 
 > ```bash
 > PC $> $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-5-4-dunfell-mp1-20-11-12/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.56-r0/linux-5.4.56
 > ```
 
-5. Apply the ST patches and the sensor patches
+6. Apply the ST patches and the sensor patches
 
 > ```bash
 > PC $> for p in `ls -1 ../*.patch`; do patch -p1 < $p; done
 > PC $> for p in `ls -1 ../sensor_patches/*.patch`; do patch -p1 < $p; done
 > ```
 
-6. Create a directory where the kernel will be built
+7. Create a directory where the kernel will be built
 
 > ```bash
 > PC $> mkdir -p ../build
 > ```
 
-7. Make and apply fragments
+8. Make and apply fragments
 
 > ```bash
 > PC $> make ARCH=arm multi_v7_defconfig fragment*.config O="$PWD/../build"
@@ -1335,7 +1353,7 @@ Returns nothing (or that the configuration is not set) which means that we need 
 > PC $> yes '' | make ARCH=arm oldconfig O="$PWD/../build"
 > ```
 
-8. In order to enable the sensors, we need to run the Linux kernel configuration with the following command
+9. In order to enable the sensors, we need to run the Linux kernel configuration with the following command
 
 > ```bash
 > PC $> make ARCH=arm menuconfig O="$PWD/../build"
@@ -1364,10 +1382,12 @@ Returns nothing (or that the configuration is not set) which means that we need 
 - Do double esc to go back to **Device Drivers** menu
 - Then go to **Network device support > Wireless LAN > Realtek rtlwifi family of devices**
 - Highlight **Realtek RTL8192CU/RTL8188CU USB Wireless Network Adapter** then type **m**
-
+- Highlight **Realtek RTL8188EU USB Wireless Network Adapter** then type **m**
 - Do double esc many times to exit the **menuconfig** tool and choose **Yes** to save the new configuration
 
 ### 2.4 Building the Linux kernel & device tree
+
+*Note: This operation is taking quite some time, between 30min to 1hour so we will not execute it, rather we will provide the output images that have been created in a USB flash drive and are inside the 8.Install_artifacts folder*
 
 1. Build kernel images (uImage and vmlinux) and device tree (dtbs)
 
@@ -1395,8 +1415,8 @@ Returns nothing (or that the configuration is not set) which means that we need 
 There are several ways to program the generated binaries
 
 * Update can be done over via a network interface
-* Update can be done connecting the SDCard directly on the Linux host
-* Update can be done connecting the SDCard on STM32MP157A-DK1 board using U-Boot <= **we will use this method**
+* Update can be done connecting the SD Card directly on the Linux host
+* Update can be done connecting the SD Card on STM32MP157A-DK1 board using U-Boot <= **we will use this method**
 
 #### 2.5.1 Enable USB mass storage mode in U-Boot
 
@@ -1433,6 +1453,8 @@ At this point you should see 4 partitions mounted on your host PC in /media/$USE
 > PC $> cd $HOME/STM32MPU_workspace/STM32MP15-Ecosystem-v2.0.0/Developer-Package/stm32mp1-openstlinux-20-06-24/sources/arm-ostl-linux-gnueabi/linux-stm32mp-5.4.56-r0/build/install_artifacts
 > ```
 
+*Note: This folder is provided in the USB flash drive inside the 8.Install_artifacts folder*
+
 2. Copy the Linux kernel and device tree to the mounted *bootfs* partition
 
 > ```bash
@@ -1445,7 +1467,7 @@ At this point you should see 4 partitions mounted on your host PC in /media/$USE
 > PC $> rm lib/modules/5.4.56/source lib/modules/5.4.56/build
 > ```
 
-4.  Optionally, strip kernel modules (to reduce the size of each kernel modules)
+4. Optionally, strip kernel modules (to reduce the size of each kernel modules)
 
 > ```bash
 > PC $> find . -name "*.ko" | xargs $STRIP --strip-debug --remove-section=.comment --remove-section=.note --preserve-dates
@@ -1459,12 +1481,14 @@ At this point you should see 4 partitions mounted on your host PC in /media/$USE
 
 6. Since we are here, let's take the opportunity to copy as well the Wi-Fi dongle driver binary as well as the python script allowing to read the sensor data (that will be needed later on) into the *rootfs* partition
 
+*Note: This folder is provided in the USB flash drive inside the 9.Additional_files folder*
+
 > ```bash
 > PC $> sudo cp -r rtlwifi/* /media/$USER/rootfs/lib/firmware/
 > PC $> sudo cp read_sensors.py /media/$USER/rootfs/home/root
 > ```
 
-8. Unmount properly the SDCard
+7. Unmount properly the SDCard
 
 > ```bash
 > PC $> umount /media/$USER/bootfs
@@ -1473,7 +1497,7 @@ At this point you should see 4 partitions mounted on your host PC in /media/$USE
 > PC $> umount /media/$USER/vendorfs
 > ```
 
-9. Then finally do a CRTL-C in the terminal handling U-Boot in mass storage to exit this mode and reset the board
+8. Then finally do a CRTL-C in the terminal handling U-Boot in mass storage to exit this mode and reset the board
 
 #### 2.5.3 Verify that the new Linux kernel and device tree can access to the sensors and read their data
 
