@@ -1381,8 +1381,8 @@ Returns nothing (or that the configuration is not set) which means that we need 
 - Do double esc to go back to **Input device support** menu
 - Do double esc to go back to **Device Drivers** menu
 - Then go to **Network device support > Wireless LAN > Realtek rtlwifi family of devices**
-- Highlight **Realtek RTL8192CU/RTL8188CU USB Wireless Network Adapter** then type **m**
 - Highlight **Realtek RTL8188EU USB Wireless Network Adapter** then type **m**
+- Highlight **Realtek RTL8192CU/RTL8188CU USB Wireless Network Adapter** then type **m**
 - Do double esc many times to exit the **menuconfig** tool and choose **Yes** to save the new configuration
 
 ### 2.4 Building the Linux kernel & device tree
